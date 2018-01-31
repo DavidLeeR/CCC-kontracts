@@ -34,6 +34,11 @@ contract CurrentC {
       t = tradeHistory[index];
     }
   }
+
+  function getTradeInfo(address tradeAdd) returns (string n) {
+    TradeContract tradecontract = TradeContract(tradeAdd);
+    return tradecontract.getConfirmedBy();
+  }
 }
 
 
