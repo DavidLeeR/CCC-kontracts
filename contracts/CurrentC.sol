@@ -23,17 +23,19 @@ contract CurrentC {
   }
 
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
-    //tradeHistory[tradeNum] = new TradeContract();
-    //tradeNum += 1;
-    return new TradeContract();//tradeHistory[tradeNum - 1];
+    address newDeploy =  new TradeContract();//tradeHistory[tradeNum - 1];
+    tradeHistory.push(newDeploy);
+    tradeNum += 1;
+    return newDeploy;
   }
 
-  //function getHistory(uint index) returns (address t) {
-   // if (index <= (tradeNum - 1)){
-   //   t = tradeHistory[index];
-    //}
-  //}
+  function getHistory(uint index) returns (address t) {
+    if (index <= (tradeNum - 1)){
+      t = tradeHistory[index];
+    }
+  }
 }
+
 
 
 
@@ -101,6 +103,8 @@ contract TradeContract {
   //10
   string counterParty;
 
+  address counterPartyAdd;
+
   //11
   string contact;
 
@@ -159,6 +163,7 @@ contract TradeContract {
     setEndDate(1,1,1);
     setPipe("pipe");
     setCounterParty("counterparty");
+    setCounterPartyAdd(0xb29e2bb965eb031ae45b424cd53b072648b7de02);
     setContact("lee3");
     setPortfolio("portolio");
     setPricingMethod("pricingmethod");
@@ -228,6 +233,10 @@ contract TradeContract {
 
   function setCounterParty(string cp) {
     counterParty = cp;
+  }
+
+  function setCounterPartyAdd(address cp) {
+    counterPartyAdd = cp;
   }
 
   function setContact(string c) {
@@ -348,6 +357,10 @@ contract TradeContract {
 
   function getCounterParty() returns (string cp) {
     cp = counterParty;
+  }
+
+  function getCounterPartyAdd() returns (address cp) {
+    cp = counterPartyAdd;
   }
 
   function getContact() returns (string c) {

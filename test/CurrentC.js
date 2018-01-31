@@ -11,14 +11,13 @@ contract('currentc', function(accounts) {
             console.log("new trade contract address =",result.toString());
         });
     });
-    //it("should return the address of the contract, sender, and receiver", function() {
-    //    var current_c;
-     //   return currentc.deployed().then(function(instance){
-      //      current_c = instance;
-        // Get the total guesses
-       //     return current_c.getHistory.call(0);
-       // }).then(function(result){
-       //     console.log("trade, sender, receiver address =",result[0].toString(), result[1].toString(), result[2].toString());
-       // });
-    //});
+   // it("should return the address of the contract, sender, and receiver", function() {
+   //     var current_c;
+   //     return currentc.deployed().then(function(instance){
+   //         current_c = instance;
+   //         return current_c.getHistory.call(0);
+   //     }).then(function(result){
+   //         console.log("trade, sender, receiver address =",result.toString());
+   //     });
+   // });
   });
