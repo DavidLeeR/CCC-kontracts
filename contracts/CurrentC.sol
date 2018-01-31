@@ -8,17 +8,11 @@ pragma solidity ^0.4.4;
 contract CurrentC {
 
   address owner;
-  
-  struct tradeHistory {
-    address[] tradeAddress;
-    address[] sendAddress;
-    address[] recAddress;
-    uint index;
-  }
-
-  tradeHistory thisTradeHistory;
+  address[] tradeHistory;
+  uint tradeNum;
 
   function CurrentC() {
+    tradeNum = 0;
     owner = msg.sender;
   }
 
@@ -29,15 +23,16 @@ contract CurrentC {
   }
 
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
-    
-    return new TradeContract();
+    //tradeHistory[tradeNum] = new TradeContract();
+    //tradeNum += 1;
+    return new TradeContract();//tradeHistory[tradeNum - 1];
   }
 
-  function getHistory(uint index) returns (address t, address s, address r) {
-    t =  thisTradeHistory.tradeAddress[index];
-    s = thisTradeHistory.sendAddress[index];
-    r = thisTradeHistory.recAddress[index];
-  }
+  //function getHistory(uint index) returns (address t) {
+   // if (index <= (tradeNum - 1)){
+   //   t = tradeHistory[index];
+    //}
+  //}
 }
 
 
