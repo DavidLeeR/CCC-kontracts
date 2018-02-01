@@ -74,24 +74,22 @@ contract TradeContract {
 /***********************************************
           MEMBER VARIABLE DECLARATIONS         
 ************************************************/
-  //1 
-  string confirmedBy;
+  //1  *removed: internal, unneeded
+  //string confirmedBy;
+  //dateStruct cDate;
 
-  dateStruct cDate;
+  //2  *removed: internal, unneeded
+  //string actualizedBy;
+  //dateStruct aDate;
 
-  //2 
-  string actualizedBy;
+  //3 *removed: internal, unneeded
+  //bool agencyDeal;
 
-  dateStruct aDate;
+  //4 *removed: only one type (gas)
+  //string dealType;
 
-  //3
-  bool agencyDeal;
-
-  //4 (storage is labeled "storag" because "storage" is a solidity keyword)
-  string dealType;
-
-  //5
-  string term;
+  //5 *removed: internal, unneeded
+  //string term;
 
   //6
   bool firm;
@@ -113,8 +111,8 @@ contract TradeContract {
   //11
   string contact;
 
-  //12
-  string portfolio;
+  //12 *removed: internal, unneeded
+  //string portfolio;
 
   //13
   string pricingMethod;
@@ -128,6 +126,9 @@ contract TradeContract {
   //16 
   priceStruct fixedPrice;
   //17 (not sure what this parameter is, need to consult Tim)
+  string point;
+
+  decimalNumberStruct volume;
 
   //18
   string comments;
@@ -148,21 +149,20 @@ contract TradeContract {
   //    of aut filling date here)
   dateStruct enteredOn;
 
-  //24 (seems to be autofilled in front end, get from there)
-  string enteredBy;
+  //24 *removed: internal, unneeded
+  //string enteredBy;
 
-  //25 (not sure what this parameter is, need to consult Tim)
 
 
   function tradeContract() {
     //need to find out from Tim the minimum elements for a contract and put here
-    setConfirmedBy("lee");
-    setCDate(1,1,1);
-    setActualizedBy("lee2");
-    setADate(1,1,1);
-    setAgencyDeal(true);
-    setDealType("dealtype");
-    setTerm("term");
+    //setConfirmedBy("lee");
+    //setCDate(1,1,1);
+    //setActualizedBy("lee2");
+    //setADate(1,1,1);
+    //setAgencyDeal(true);
+    //setDealType("dealtype");
+    //setTerm("term");
     setFirm(true);
     setStartDate(1,1,1);
     setEndDate(1,1,1);
@@ -170,10 +170,12 @@ contract TradeContract {
     setCounterParty("counterparty");
     setCounterPartyAdd(0xb29e2bb965eb031ae45b424cd53b072648b7de02);
     setContact("lee3");
-    setPortfolio("portolio");
+    //setPortfolio("portolio");
     setPricingMethod("pricingmethod");
     setIndex(1);
     setIndexFactor(1);
+    setPoint("point");
+    setVolume(1,1);
     setFixedPrice(1,1);
     setComments("comment");
     setTotalVolume(1,1);
@@ -184,37 +186,44 @@ contract TradeContract {
 /***********************************************
                  SET FUNCTIONS                   
 ************************************************/
-  function setConfirmedBy(string cb) {
+  //removed
+  /*function setConfirmedBy(string cb) {
     confirmedBy = cb;
-  }
+  }*/
 
-  function setCDate(int m, int d, int y) {
+  //removed
+  /*function setCDate(int m, int d, int y) {
     cDate.month = m;
     cDate.day = d;
     cDate.year = y;
-  }
+  }*/
 
-  function setActualizedBy(string ab) {
+  //removed
+  /*function setActualizedBy(string ab) {
     actualizedBy = ab;
-  }
+  }*/
 
-  function setADate(int m, int d, int y) {
+  //removed
+  /*function setADate(int m, int d, int y) {
     aDate.month = m;
     aDate.day = d;
     aDate.year = y;
-  }
+  }*/
 
-  function setAgencyDeal(bool ad) {
+  //removed
+  /*function setAgencyDeal(bool ad) {
     agencyDeal = ad;
-  }
+  }*/
 
-  function setDealType(string dt) {
+  //removed
+  /*function setDealType(string dt) {
     dealType = dt;
-  }
+  }*/
 
-  function setTerm(string t) {
+  //removed
+  /*function setTerm(string t) {
     term = t;
-  }
+  }*/
 
   function setFirm(bool f) {
     firm = f;
@@ -248,9 +257,10 @@ contract TradeContract {
     contact = c;
   }
 
-  function setPortfolio(string p) {
+  //removed
+  /*function setPortfolio(string p) {
     portfolio = p;
-  }
+  }*/
 
   function setPricingMethod(string pm) {
     pricingMethod = pm;
@@ -267,6 +277,14 @@ contract TradeContract {
   function setFixedPrice(int d, int c){
     fixedPrice.dollars = d;
     fixedPrice.cents = c;
+  }
+
+  function setPoint(string p){
+    point = p;
+  }
+
+  function setVolume(int p, int s){
+    Volume.
   }
 
   function setComments(string c) {
@@ -299,46 +317,54 @@ contract TradeContract {
     enteredOn.year = y;
   }
 
-  function setEnteredBy(string eb) {
+  //removed
+  /*function setEnteredBy(string eb) {
     enteredBy = eb;
-  }
+  }*/
 
 
 
 /***********************************************
                  GET FUNCTIONS                   
 ************************************************/
-  function getConfirmedBy() returns (string cb) {
+  //removed
+  /*function getConfirmedBy() returns (string cb) {
     cb = confirmedBy;
-  }
+  }*/
 
-  function getCDate() returns (int m, int d, int y) {
+  //removed
+  /*function getCDate() returns (int m, int d, int y) {
     m = cDate.month ;
     d = cDate.day ;
     y =cDate.year;
-  }
+  }*/
 
-  function getActualizedBy() returns (string ab) {
+  //removed
+  /*function getActualizedBy() returns (string ab) {
     ab = actualizedBy;
-  }
+  }*/
 
-  function getADate() returns (int m, int d, int y) {
+  //removed
+  /*function getADate() returns (int m, int d, int y) {
     m = aDate.month;
     d = aDate.day;
     y = aDate.year;
-  }
+  }*/
 
-  function getAgencyDeal() returns (bool ad) {
+  //removed
+  /*function getAgencyDeal() returns (bool ad) {
     ad = agencyDeal;
-  }
+  }*/
 
-  function getDealType() returns (string dt) {
+  //removed
+  /*function getDealType() returns (string dt) {
     dt = dealType;
-  }
+  }*/
 
-  function getTerm() returns (string t) {
+  //removed
+  /*function getTerm() returns (string t) {
     t = term;
-  }
+  }*/
 
   function getFirm() returns (bool f) {
     f = firm;
@@ -372,9 +398,10 @@ contract TradeContract {
     c = contact;
   }
 
-  function getPortfolio() returns (string p) {
+  //removed
+  /*function getPortfolio() returns (string p) {
     p = portfolio;
-  }
+  }*/
 
   function getPricingMethod() returns (string pm) {
     pm = pricingMethod;
@@ -423,7 +450,8 @@ contract TradeContract {
     y = enteredOn.year;
   }
 
-  function getEnteredBy() returns (string eb) {
+  //removed
+  /*function getEnteredBy() returns (string eb) {
     eb = enteredBy;
-  }
+  }*/
 }
