@@ -35,9 +35,10 @@ contract CurrentC {
     }
   }
 
-  function getTradeInfo(address tradeAdd) returns (string n) {
+  function getTradeInfo(uint index) returns (bytes32 n) {
+    address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
-    return tradecontract.getConfirmedBy();
+    n = tradecontract.getParty();
   }
 }
 
@@ -75,21 +76,21 @@ contract TradeContract {
           MEMBER VARIABLE DECLARATIONS         
 ************************************************/
   //1  *removed: internal, unneeded
-  //string confirmedBy;
+  //bytes32 confirmedBy;
   //dateStruct cDate;
 
   //2  *removed: internal, unneeded
-  //string actualizedBy;
+  //bytes32 actualizedBy;
   //dateStruct aDate;
 
   //3 *removed: internal, unneeded
   //bool agencyDeal;
 
   //4 *removed: only one type (gas)
-  //string dealType;
+  //bytes32 dealType;
 
   //5 *removed: internal, unneeded
-  //string term;
+  //bytes32 term;
 
   //6
   bool firm;
@@ -101,23 +102,28 @@ contract TradeContract {
   dateStruct endDate;
 
   //9 
-  string pipe;
+  bytes32 pipe;
 
   //10
-  string counterParty;
+  bytes32 counterParty;
 
   address counterPartyAdd;
 
+  //10.b
+  bytes32 party;
+
+  address partyAdd;
+
   //11
-  string contact;
+  bytes32 contact;
 
   //12 *removed: internal, unneeded
-  //string portfolio;
+  //bytes32 portfolio;
 
   //13
-  string pricingMethod;
+  bytes32 pricingMethod;
 
-  //14 (not sure if this should be an int or a string)
+  //14 (not sure if this should be an int or a bytes32)
   int index;
 
   //15
@@ -126,12 +132,12 @@ contract TradeContract {
   //16 
   priceStruct fixedPrice;
   //17 (not sure what this parameter is, need to consult Tim)
-  string point;
+  bytes32 point;
 
   decimalNumberStruct volume;
 
   //18
-  string comments;
+  bytes32 comments;
 
   //19 (solidity does not yet support fixed point numbers)
   decimalNumberStruct totalVolume;
@@ -143,14 +149,14 @@ contract TradeContract {
   priceStruct totalPrice;
 
   //22
-  string trader;
+  bytes32 trader;
 
   //23 (seems to be auto filled in front end, will just get from there instead
   //    of aut filling date here)
   dateStruct enteredOn;
 
   //24 *removed: internal, unneeded
-  //string enteredBy;
+  //bytes32 enteredBy;
 
 
 
@@ -168,7 +174,9 @@ contract TradeContract {
     setEndDate(1,1,1);
     setPipe("pipe");
     setCounterParty("counterparty");
-    setCounterPartyAdd(0xb29e2bb965eb031ae45b424cd53b072648b7de02);
+    setCounterPartyAdd(0xb29E2bB965eb031ae45b424cD53b072648B7dE02);
+    setParty("party");
+    setPartyAdd(0x6A10e778F8Ea5F507631585343D5DC190a9Aa09E);
     setContact("lee3");
     //setPortfolio("portolio");
     setPricingMethod("pricingmethod");
@@ -187,7 +195,7 @@ contract TradeContract {
                  SET FUNCTIONS                   
 ************************************************/
   //removed
-  /*function setConfirmedBy(string cb) {
+  /*function setConfirmedBy(bytes32 cb) {
     confirmedBy = cb;
   }*/
 
@@ -199,7 +207,7 @@ contract TradeContract {
   }*/
 
   //removed
-  /*function setActualizedBy(string ab) {
+  /*function setActualizedBy(bytes32 ab) {
     actualizedBy = ab;
   }*/
 
@@ -216,12 +224,12 @@ contract TradeContract {
   }*/
 
   //removed
-  /*function setDealType(string dt) {
+  /*function setDealType(bytes32 dt) {
     dealType = dt;
   }*/
 
   //removed
-  /*function setTerm(string t) {
+  /*function setTerm(bytes32 t) {
     term = t;
   }*/
 
@@ -241,11 +249,11 @@ contract TradeContract {
     endDate.year = y;
   }
 
-  function setPipe(string p) {
+  function setPipe(bytes32 p) {
     pipe = p;
   }
 
-  function setCounterParty(string cp) {
+  function setCounterParty(bytes32 cp) {
     counterParty = cp;
   }
 
@@ -253,16 +261,24 @@ contract TradeContract {
     counterPartyAdd = cp;
   }
 
-  function setContact(string c) {
+  function setParty(bytes32 p) {
+    counterParty = p;
+  }
+
+  function setPartyAdd(address p) {
+    counterPartyAdd = p;
+  }
+
+  function setContact(bytes32 c) {
     contact = c;
   }
 
   //removed
-  /*function setPortfolio(string p) {
+  /*function setPortfolio(bytes32 p) {
     portfolio = p;
   }*/
 
-  function setPricingMethod(string pm) {
+  function setPricingMethod(bytes32 pm) {
     pricingMethod = pm;
   }
 
@@ -279,15 +295,16 @@ contract TradeContract {
     fixedPrice.cents = c;
   }
 
-  function setPoint(string p){
+  function setPoint(bytes32 p){
     point = p;
   }
 
   function setVolume(int p, int s){
-    Volume.
+    volume.prefix = p;
+    volume.suffix = s;
   }
 
-  function setComments(string c) {
+  function setComments(bytes32 c) {
     comments = c;
   }
 
@@ -307,7 +324,7 @@ contract TradeContract {
     totalPrice.cents = c;
   }
 
-  function setTrader(string t) {
+  function setTrader(bytes32 t) {
     trader = t;
   }
 
@@ -318,7 +335,7 @@ contract TradeContract {
   }
 
   //removed
-  /*function setEnteredBy(string eb) {
+  /*function setEnteredBy(bytes32 eb) {
     enteredBy = eb;
   }*/
 
@@ -328,7 +345,7 @@ contract TradeContract {
                  GET FUNCTIONS                   
 ************************************************/
   //removed
-  /*function getConfirmedBy() returns (string cb) {
+  /*function getConfirmedBy() returns (bytes32 cb) {
     cb = confirmedBy;
   }*/
 
@@ -340,7 +357,7 @@ contract TradeContract {
   }*/
 
   //removed
-  /*function getActualizedBy() returns (string ab) {
+  /*function getActualizedBy() returns (bytes32 ab) {
     ab = actualizedBy;
   }*/
 
@@ -357,12 +374,12 @@ contract TradeContract {
   }*/
 
   //removed
-  /*function getDealType() returns (string dt) {
+  /*function getDealType() returns (bytes32 dt) {
     dt = dealType;
   }*/
 
   //removed
-  /*function getTerm() returns (string t) {
+  /*function getTerm() returns (bytes32 t) {
     t = term;
   }*/
 
@@ -382,11 +399,11 @@ contract TradeContract {
     y = endDate.year;
   }
 
-  function getPipe() returns (string p) {
+  function getPipe() returns (bytes32 p) {
     p = pipe;
   }
 
-  function getCounterParty() returns (string cp) {
+  function getCounterParty() returns (bytes32 cp) {
     cp = counterParty;
   }
 
@@ -394,16 +411,24 @@ contract TradeContract {
     cp = counterPartyAdd;
   }
 
-  function getContact() returns (string c) {
+  function getParty() returns (bytes32 p) {
+    p = counterParty;
+  }
+
+  function getPartyAdd() returns (address p) {
+    p = counterPartyAdd;
+  }
+
+  function getContact() returns (bytes32 c) {
     c = contact;
   }
 
   //removed
-  /*function getPortfolio() returns (string p) {
+  /*function getPortfolio() returns (bytes32 p) {
     p = portfolio;
   }*/
 
-  function getPricingMethod() returns (string pm) {
+  function getPricingMethod() returns (bytes32 pm) {
     pm = pricingMethod;
   }
 
@@ -420,7 +445,7 @@ contract TradeContract {
     c = fixedPrice.cents;
   }
 
-  function getComments() returns (string c) {
+  function getComments() returns (bytes32 c) {
     c = comments;
   }
 
@@ -440,7 +465,7 @@ contract TradeContract {
     c = totalPrice.cents;
   }
 
-  function getTrader() returns (string t) {
+  function getTrader() returns (bytes32 t) {
     t = trader;
   }
 
@@ -451,7 +476,7 @@ contract TradeContract {
   }
 
   //removed
-  /*function getEnteredBy() returns (string eb) {
+  /*function getEnteredBy() returns (bytes32 eb) {
     eb = enteredBy;
   }*/
 }
