@@ -6,12 +6,12 @@ contract('currentc', function(accounts) {
         return currentc.deployed().then(function(instance){
             current_c = instance;
         // Get the total guesses
-            return current_c.makeTrade.call(0xb29e2bb965eb031ae45b424cd53b072648b7de02);
+            return current_c.makeTrade.call(0xb29E2bB965eb031ae45b424cD53b072648B7dE02);
         }).then(function(result){
             console.log("new trade contract address =",result.toString());
-            return current_c.getTradeInfo.call(0);
+            return current_c.getHistory.call(0);
         }).then(function(result){
-            console.log("part of trade = ", result.toString());
+            console.log("address of trade = ", result.toString());
         });
     });
 });
