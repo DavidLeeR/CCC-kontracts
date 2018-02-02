@@ -29,8 +29,15 @@ contract CurrentC {
     return newDeploy;
   }
 
+  function getOwner() returns (address o) {
+    o = owner;
+  }
+  function getTradeNum() returns (uint tn) {
+    tn = tradeNum;
+  }
+
   function getHistory(uint index) returns (address t) {
-    if (index <= (tradeNum - 1)){
+    if (index <= (tradeNum - 1)) {
       t = tradeHistory[index];
     }
   }
@@ -262,11 +269,11 @@ contract TradeContract {
   }
 
   function setParty(bytes32 p) {
-    counterParty = p;
+    party = p;
   }
 
   function setPartyAdd(address p) {
-    counterPartyAdd = p;
+    partyAdd = p;
   }
 
   function setContact(bytes32 c) {
@@ -290,16 +297,16 @@ contract TradeContract {
     indexFactor = ir;
   }
 
-  function setFixedPrice(int d, int c){
+  function setFixedPrice(int d, int c) {
     fixedPrice.dollars = d;
     fixedPrice.cents = c;
   }
 
-  function setPoint(bytes32 p){
+  function setPoint(bytes32 p) {
     point = p;
   }
 
-  function setVolume(int p, int s){
+  function setVolume(int p, int s) {
     volume.prefix = p;
     volume.suffix = s;
   }
@@ -412,11 +419,11 @@ contract TradeContract {
   }
 
   function getParty() returns (bytes32 p) {
-    p = counterParty;
+    p = party;
   }
 
   function getPartyAdd() returns (address p) {
-    p = counterPartyAdd;
+    p = partyAdd;
   }
 
   function getContact() returns (bytes32 c) {
