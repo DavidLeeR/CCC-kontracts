@@ -42,10 +42,23 @@ contract CurrentC {
     }
   }
 
-  function getTradeInfo(uint index) returns (bytes32 n) {
+  function getTradePartyInfo(uint index) returns (string p/*, address pa, bytes32 cp, address cpa*/) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
-    n = tradecontract.getParty();
+
+    string retString = new string(10);
+    bytes32 toReturn = bytes32(retString);
+    //p = tradecontract.getParty();
+    bytes32 party = tradecontract.getParty();
+
+    for (uint i = 0; (i < 10) && (i < party.length); i++){
+      toReturn[i] = party[i];
+    }
+
+    p =  string(toReturn);
+    /*pa = tradecontract.getPartyAdd();
+    cp = tradecontract.getCounterParty();
+    cpa = tradecontract.getCounterPartyAdd();*/
   }
 }
 
@@ -167,7 +180,7 @@ contract TradeContract {
 
 
 
-  function tradeContract() {
+  function TradeContract() {
     //need to find out from Tim the minimum elements for a contract and put here
     //setConfirmedBy("lee");
     //setCDate(1,1,1);
