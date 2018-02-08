@@ -7,4 +7,4 @@ This repository contains the Truffle directory for the developing the smart cont
 
 -for smart contracts, see "contracts"
 
--for test suites written in JavaScript, see "tests"
+-for test suites written in JavaScript, see "test"
