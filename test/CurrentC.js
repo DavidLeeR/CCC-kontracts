@@ -1,3 +1,5 @@
+//Copyright © 2018 David Ramirez
+
 var currentc = artifacts.require("./CurrentC.sol");
 
 contract('currentc', function(accounts) {
