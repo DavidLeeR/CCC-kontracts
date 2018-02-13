@@ -14,7 +14,7 @@ contract('currentc', function(accounts) {
 
         }).then(function(result){
             console.log("new trade contract address =",result);
-            //get trade number
+            //get trade number (should be 1)
             return current_c.getTradeNum.call();
 
         }).then(function(result){
@@ -22,19 +22,22 @@ contract('currentc', function(accounts) {
             //get main contract owner
             return current_c.getTradePartyInfo.call(0);
         }).then(function(result){
-            console.log("party info for trade 1 = ", result[0],result[1],result[2],result[3]);
+            //party should say "party"  **PROBLEM: result says "0 x 7 0" instead**
+            console.log("party info for trade 1 = ", result.toString());
             return current_c.getOwner.call();
         }).then(function(result){
+            //this address should be unique
             console.log("main contract owner address = ", result);
             //make second trade
             current_c.makeTrade(0x28744a3CE59A1A2f7fa17e22a3955Ba61558356F);
-            //get tradde history address 2 (should be different than address 1)
+            //get trade history address 2 (should be different than address 1)
             return current_c.getHistory.call(1);
 
         }).then(function(result){
             console.log("2nd new trade contract address =", result);
             return current_c.getTradeNum.call();
         }).then(function(result){
+            //trae number should be 2
             console.log("trade number after 2nd trade = ", result.toNumber());
         
         });
