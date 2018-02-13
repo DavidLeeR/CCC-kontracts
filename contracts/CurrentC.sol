@@ -32,6 +32,7 @@ contract CurrentC {
   function getOwner() returns (address o) {
     o = owner;
   }
+  
   function getTradeNum() returns (uint tn) {
     tn = tradeNum;
   }
