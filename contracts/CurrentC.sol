@@ -42,20 +42,14 @@ contract CurrentC {
     }
   }
 
-  function getTradePartyInfo(uint index) returns (string p/*, address pa, bytes32 cp, address cpa*/) {
+  function getTradePartyInfo(uint index) returns (bytes32 p/*, address pa, bytes32 cp, address cpa*/) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
-    string retString = new string(10);
-    bytes32 toReturn = bytes32(retString);
     //p = tradecontract.getParty();
     bytes32 party = tradecontract.getParty();
 
-    for (uint i = 0; (i < 10) && (i < party.length); i++){
-      toReturn[i] = party[i];
-    }
-
-    p =  string(toReturn);
+    p =  party;
     /*pa = tradecontract.getPartyAdd();
     cp = tradecontract.getCounterParty();
     cpa = tradecontract.getCounterPartyAdd();*/
