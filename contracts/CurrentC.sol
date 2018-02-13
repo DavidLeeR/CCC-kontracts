@@ -22,6 +22,23 @@ contract CurrentC {
     }
   }
 
+  function bytes32ToString(bytes32 x) constant returns (string) {
+    bytes memory bytesString = new bytes(32);
+    uint charCount = 0;
+    for (uint j = 0; j < 32; j++) {
+        byte char = byte(bytes32(uint(x) * 2 ** (8 * j)));
+        if (char != 0) {
+            bytesString[charCount] = char;
+            charCount++;
+        }
+    }
+    bytes memory bytesStringTrimmed = new bytes(charCount);
+    for (j = 0; j < charCount; j++) {
+        bytesStringTrimmed[j] = bytesString[j];
+    }
+    return string(bytesStringTrimmed);
+}
+
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
     address newDeploy =  new TradeContract();//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
@@ -43,14 +60,12 @@ contract CurrentC {
     }
   }
 
-  function getTradePartyInfo(uint index) returns (bytes32 p/*, address pa, bytes32 cp, address cpa*/) {
+  function getTradePartyInfo(uint index) returns (string p/*, address pa, bytes32 cp, address cpa*/) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
-    //p = tradecontract.getParty();
-    bytes32 party = tradecontract.getParty();
-
-    p =  party;
+    bytes32 contractParty = tradecontract.getParty();
+    p = bytes32ToString(contractParty);
     /*pa = tradecontract.getPartyAdd();
     cp = tradecontract.getCounterParty();
     cpa = tradecontract.getCounterPartyAdd();*/
