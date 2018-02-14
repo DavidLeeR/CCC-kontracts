@@ -9,11 +9,11 @@ contract CurrentC {
 
   address owner;
   address[] tradeHistory;
-  uint tradeNum;
+  uint historyTracker;
 
   //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
-    tradeNum = 0;
+    historyTracker = 0;
     owner = msg.sender;
   }
 
@@ -46,7 +46,7 @@ contract CurrentC {
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
     address newDeploy =  new TradeContract();//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
-    tradeNum += 1;
+    historyTracker += 1;
     return newDeploy;
   }
 
@@ -56,8 +56,8 @@ contract CurrentC {
   }
   
   //returns current trade num for main contract (ie. the number of trades created (not nec accepted) with main contract)
-  function getTradeNum() returns (uint tn) {
-    tn = tradeNum;
+  function getTradeIndex() returns (uint tn) {
+    tn = historyTracker;
   }
 
   //return address of trade contract at trade history index given 
