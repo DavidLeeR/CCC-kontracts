@@ -11,17 +11,20 @@ contract CurrentC {
   address[] tradeHistory;
   uint tradeNum;
 
+  //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
     tradeNum = 0;
     owner = msg.sender;
   }
 
-  function suicide() {
+  //turns the contract into read only
+  function terminateContract() {
     if (msg.sender == owner) {
       selfdestruct(owner);
     }
   }
 
+  //converts bytes32 type to string, used to read bytes32 type
   function bytes32ToString(bytes32 x) constant returns (string) {
     bytes memory bytesString = new bytes(32);
     uint charCount = 0;
@@ -39,6 +42,7 @@ contract CurrentC {
     return string(bytesStringTrimmed);
 }
 
+  //makes a trade contract between 2 parties and adds to trade history
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
     address newDeploy =  new TradeContract();//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
@@ -46,29 +50,30 @@ contract CurrentC {
     return newDeploy;
   }
 
+  //returns address of owner of main CCC contract
   function getOwner() returns (address o) {
     o = owner;
   }
   
+  //returns current trade num for main contract (ie. the number of trades created (not nec accepted) with main contract)
   function getTradeNum() returns (uint tn) {
     tn = tradeNum;
   }
 
+  //return address of trade contract at trade history index given 
   function getHistory(uint index) returns (address t) {
     if (index <= (tradeNum - 1)) {
       t = tradeHistory[index];
     }
   }
 
+  //returns the party of the trade at given index
   function getTradePartyInfo(uint index) returns (string p/*, address pa, bytes32 cp, address cpa*/) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
     bytes32 contractParty = tradecontract.getParty();
     p = bytes32ToString(contractParty);
-    /*pa = tradecontract.getPartyAdd();
-    cp = tradecontract.getCounterParty();
-    cpa = tradecontract.getCounterPartyAdd();*/
   }
 }
 
@@ -85,18 +90,20 @@ contract CurrentC {
 -----------------------------------------------------------------------*/
 contract TradeContract {
 
-
+  //for date type
   struct dateStruct {
     int month;
     int day;
     int year;
   }
 
+  //for price type
   struct priceStruct {
     int dollars;
     int cents;
   }
 
+  //for float type (floats not yet supported by solidity, cannot do math with this struct, set and read only)
   struct decimalNumberStruct {
     int prefix;
     int suffix;
@@ -189,7 +196,7 @@ contract TradeContract {
   //bytes32 enteredBy;
 
 
-
+  //dummy trade constructor for testing
   function TradeContract() {
     //need to find out from Tim the minimum elements for a contract and put here
     //setConfirmedBy("lee");
