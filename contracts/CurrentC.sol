@@ -11,7 +11,6 @@ contract CurrentC {
   address[] tradeHistory;
   uint historyTracker;
 
-
   //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
     historyTracker = 0;
@@ -372,7 +371,17 @@ contract TradeContract {
     setFixedPrice(1,1);
     setComments("comment");
     setTotalVolume(1,1);
+    setTotalPrice(1,1);
   }
+
+  //real use constructor requiring all required parts of trade
+  /*function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
+                        string counterParty, address counterPartyAddress, string party, address partyAddress, string contact, string pricingMethod,
+                        uint indexP, uint indexS, uint indexFactorP, uint indexFactorS, string point, uint volumeP, uint volumeS, uint fixedPriceD,
+                        uint fixedPriceC, string comments, uint totalVolumeP, uint TotalVolumeS) {
+
+                        } */
+
 
 
 
