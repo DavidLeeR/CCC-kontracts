@@ -15,7 +15,7 @@ contract('currentc', function(accounts) {
         }).then(function(result){
             console.log("new trade contract address =",result);
             //get trade number (should be 1)
-            return current_c.getTradeNum.call();
+            return current_c.getTradeIndex.call();
 
         }).then(function(result){
             console.log("trade number =", result.toNumber());
