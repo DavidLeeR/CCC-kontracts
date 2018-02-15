@@ -352,7 +352,7 @@ contract TradeContract {
 
 
   //dummy trade constructor for testing
-  function TradeContract() {
+  /*function TradeContract() {
     setFirm(true);
     setStartDate(1,1,1);
     setEndDate(1,1,1);
@@ -372,15 +372,32 @@ contract TradeContract {
     setComments("comment");
     setTotalVolume(1,1);
     setTotalPrice(1,1);
-  }
+  }*/
 
   //real use constructor requiring all required parts of trade
-  /*function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
+  function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
                         string counterParty, address counterPartyAddress, string party, address partyAddress, string contact, string pricingMethod,
                         uint indexP, uint indexS, uint indexFactorP, uint indexFactorS, string point, uint volumeP, uint volumeS, uint fixedPriceD,
                         uint fixedPriceC, string comments, uint totalVolumeP, uint TotalVolumeS) {
 
-                        } */
+                          setFirm(firm);
+                          setStartDate(startDateM, startDateD, startDateY);
+                          setEndDate(endDateM, endDateD, endDateY);
+                          setPipe(pipe);
+                          setCounterParty(counterParty);
+                          setCounterPartyAdd(counterPartyAddress);
+                          setParty(party);
+                          setPartyAdd(partyAddress);
+                          setContact(contact);
+                          setPricingMethod(pricingMethod);
+                          setIndex(indexP, indexS);
+                          setIndexFactor(indexFactorP, indexFactorS);
+                          setPoint(point);
+                          setVolume(volumeP, volumeS);
+                          setFixedPrice(fixedPriceD, fixedPriceC);
+                          setComments(comments);
+                          setTotalVolume(totalVolumeP, totalVolumeS);
+                        } 
 
 
 
