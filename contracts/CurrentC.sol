@@ -44,7 +44,7 @@ contract CurrentC {
 
   //makes a trade contract between 2 parties and adds to trade history
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
-    address newDeploy =  new TradeContract();//tradeHistory[tradeNum - 1];
+    address newDeploy =  new TradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
     historyTracker += 1;
     return newDeploy;
@@ -352,15 +352,15 @@ contract TradeContract {
 
 
   //dummy trade constructor for testing
-  /*function TradeContract() {
+  function TradeContract(address p, address cp) {
     setFirm(true);
     setStartDate(1,1,1);
     setEndDate(1,1,1);
     setPipe("pipe");
     setCounterParty("counterparty");
-    setCounterPartyAdd(0xb29E2bB965eb031ae45b424cD53b072648B7dE02);
+    setCounterPartyAdd(cp);
     setParty("party");
-    setPartyAdd(0x6A10e778F8Ea5F507631585343D5DC190a9Aa09E);
+    setPartyAdd(p);
     setContact("lee3");
     //setPortfolio("portolio");
     setPricingMethod("pricingmethod");
@@ -372,10 +372,10 @@ contract TradeContract {
     setComments("comment");
     setTotalVolume(1,1);
     setTotalPrice(1,1);
-  }*/
+  }
 
   //real use constructor requiring all required parts of trade
-  function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
+  /*function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
                         string counterParty, address counterPartyAddress, string party, address partyAddress, string contact, string pricingMethod,
                         uint indexP, uint indexS, uint indexFactorP, uint indexFactorS, string point, uint volumeP, uint volumeS, uint fixedPriceD,
                         uint fixedPriceC, string comments, uint totalVolumeP, uint TotalVolumeS) {
@@ -398,6 +398,7 @@ contract TradeContract {
                           setComments(comments);
                           setTotalVolume(totalVolumeP, totalVolumeS);
                         } 
+                        */
 
 
 
