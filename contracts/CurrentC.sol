@@ -46,7 +46,7 @@ contract CurrentC {
     return string(bytesStringTrimmed);
 }
 
-  //makes a trade contract between 2 parties and adds to trade history
+  //makes a purchase trade contract between 2 parties and adds to trade history
   function makePurchaseTrade(address receiver) payable returns(address tradeContractAddress) {
     require(msg.sender == owner);
     address newDeploy =  new PurchaseTradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
@@ -54,6 +54,16 @@ contract CurrentC {
     historyTracker += 1;
     return newDeploy;
   }
+
+  //makes a sell trade contract between 2 parties and adds to trade history
+  function makeSellTrade(address receiver) returns(address tradeContractAddress) {
+    require(msg.sender == owner);
+    address newDeploy =  new SellTradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
+    tradeHistory.push(newDeploy);
+    historyTracker += 1;
+    return newDeploy;
+  }
+
 
   //adds trade to acceptedTradeHistory array, making it accepted by both parties (must be called by a tradeContract
   //in the tradeHistory array)
@@ -304,7 +314,7 @@ contract PurchaseTradeContract is AbstractTrade {
   }
 
   //function for the counter party to accept the trade, calls main contract to add trade address to array
-  function acceptTrade() {
+  function acceptTrade() payable {
     //caller of this function must be the counter party
     require(msg.sender == counterPartyAddress);
     address mainInterfaceAddress = owner; 
@@ -328,7 +338,7 @@ contract SellTradeContract is AbstractTrade {
   }
 
   //function for the counter party to accept the trade, calls main contract to add trade address to array
-  function acceptTrade() {
+  function acceptTrade() payable {
     //caller of this function must be the counter party
     require(msg.sender == counterPartyAddress);
     address mainInterfaceAddress = owner; 

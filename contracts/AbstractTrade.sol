@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-
+//abstract contract for use with purchase or sell trades (only difference is internalType value and acceptTrade function)
 contract AbstractTrade {
 
   //for date type
@@ -369,5 +369,5 @@ contract AbstractTrade {
   }
 
   //function for the counter party to accept the trade, calls main contract to add trade address to array
-  function acceptTrade();
+  function acceptTrade() payable;
 }
