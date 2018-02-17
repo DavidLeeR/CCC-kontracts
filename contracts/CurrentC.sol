@@ -9,11 +9,14 @@ contract CurrentC {
 
   address owner;
   address[] tradeHistory;
+  address[] acceptedTradeHistory;
   uint historyTracker;
+  uint acceptedHistoryTracker;
 
   //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
     historyTracker = 0;
+    acceptedHistoryTracker = 0;
     owner = msg.sender;
   }
 
@@ -50,14 +53,16 @@ contract CurrentC {
     return newDeploy;
   }
 
-  function acceptTradeMain(address tradeAddress, bool a) {
+  //adds trade to acceptedTradeHistory array, making it accepted by both parties (must be called by a tradeContract
+  //in the tradeHistory array)
+  function acceptTradeMain() {
     uint tradeCheck = 0;
     uint i = 0;
 
     //see if trade address is in trade history address array
     for (i; i < historyTracker;i++)
     {
-      if (tradeAddress == tradeHistory[i])
+      if (msg.sender == tradeHistory[i])
       {
         tradeCheck = 1;
       }
@@ -65,9 +70,12 @@ contract CurrentC {
 
     //require the trade address to be in the array of stored trade addresses
     require(tradeCheck == 1);
-    //require the caller of this function to be the trade address
-    require(msg.sender == tradeAddress);
 
+    //add the calling accepting trade contract to the acceptedTradeHistory array, thus considering it
+    //accepted by both parties (can only happen if counterparty accepts trade via TradeContract, and 
+    //the TradeContract must be the one calling this function
+    acceptedTradeHistory[acceptedHistoryTracker] = msg.sender;
+    acceptedHistoryTracker++;
   }
 
   //returns address of owner of main CCC contract
@@ -651,7 +659,16 @@ contract TradeContract {
     y = enteredOn.year;
   }
 
-  function acceptTrade(bool a) {
+  //function for the counter party to accept the trade, calls main contract to add trade address to array
+  function acceptTrade() {
+    //caller of this function must be the counter party
     require(msg.sender == counterPartyAddress);
+    address mainInterfaceAddress = owner; 
+    CurrentC currentc = CurrentC(mainInterfaceAddress);
+
+    currentc.acceptTradeMain();
+
+    //makes contract read only, sending all funds it contains to the counterparty 
+    selfdestruct(counterPartyAddress);
   }
 }
