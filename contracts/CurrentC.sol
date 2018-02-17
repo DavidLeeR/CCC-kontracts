@@ -50,8 +50,24 @@ contract CurrentC {
     return newDeploy;
   }
 
-  function acceptTrade(address tradeAddress, bool a) internal {
-    
+  function acceptTradeMain(address tradeAddress, bool a) {
+    uint tradeCheck = 0;
+    uint i = 0;
+
+    //see if trade address is in trade history address array
+    for (i; i < historyTracker;i++)
+    {
+      if (tradeAddress == tradeHistory[i])
+      {
+        tradeCheck = 1;
+      }
+    }
+
+    //require the trade address to be in the array of stored trade addresses
+    require(tradeCheck == 1);
+    //require the caller of this function to be the trade address
+    require(msg.sender == tradeAddress);
+
   }
 
   //returns address of owner of main CCC contract
