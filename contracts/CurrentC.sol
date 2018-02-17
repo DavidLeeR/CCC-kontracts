@@ -19,13 +19,12 @@ contract CurrentC {
 
   //turns the contract into read only
   function terminateContract() {
-    if (msg.sender == owner) {
-      selfdestruct(owner);
-    }
+    require(msg.sender == owner);
+    selfdestruct(owner);
   }
 
   //converts bytes32 type to string, used to read bytes32 type
-  function bytes32ToString(bytes32 x) constant returns (string) {
+  function bytes32ToString(bytes32 x) private constant returns (string) {
     bytes memory bytesString = new bytes(32);
     uint charCount = 0;
     for (uint j = 0; j < 32; j++) {
@@ -44,6 +43,7 @@ contract CurrentC {
 
   //makes a trade contract between 2 parties and adds to trade history
   function makeTrade(address receiver) payable returns(address tradeContractAddress) {
+    require(msg.sender == owner);
     address newDeploy =  new TradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
     historyTracker += 1;
@@ -57,11 +57,12 @@ contract CurrentC {
   
   //returns current trade num for main contract (ie. the number of trades created (not nec accepted) with main contract)
   function getTradeIndex() returns (uint tn) {
+    require(msg.sender == owner);
     tn = historyTracker;
   }
 
   //return address of trade contract at trade history index given 
-  function getHistory(uint index) returns (address t) {
+  function getHistory(uint index) private returns (address t) {
     if (index <= (historyTracker - 1)) {
       t = tradeHistory[index];
     }
@@ -289,7 +290,7 @@ contract TradeContract {
 /***********************************************
           MEMBER VARIABLE DECLARATIONS         
 ************************************************/
-
+  address owner;
   //6
   bool firm;
 
@@ -372,6 +373,7 @@ contract TradeContract {
     setComments("comment");
     setTotalVolume(1,1);
     setTotalPrice(1,1);
+    owner = msg.sender;
   }
 
   //real use constructor requiring all required parts of trade
@@ -511,98 +513,119 @@ contract TradeContract {
 ************************************************/
 
   function getFirm() returns (bool f) {
+    require(msg.sender == owner);
     f = firm;
   }
 
   function getStartDate() returns (uint m, uint d, uint y) {
+    require(msg.sender == owner);
     m = startDate.month;
     d = startDate.day;
     y = startDate.year;
   }
 
   function getEndDate() returns (uint m, uint d, uint y) {
+    require(msg.sender == owner);
     m = endDate.month;
     d = endDate.day;
     y = endDate.year;
   }
 
   function getPipe() returns (bytes32 p) {
+    require(msg.sender == owner);
     p = pipe;
   }
 
   function getCounterParty() returns (bytes32 cp) {
+    require(msg.sender == owner);
     cp = counterParty;
   }
 
   function getCounterPartyAdd() returns (address cp) {
+    require(msg.sender == owner);
     cp = counterPartyAdd;
   }
 
   function getParty() returns (bytes32 p) {
+    require(msg.sender == owner);
     p = party;
   }
 
   function getPartyAdd() returns (address p) {
+    require(msg.sender == owner);
     p = partyAdd;
   }
 
   function getContact() returns (bytes32 c) {
+    require(msg.sender == owner);
     c = contact;
   }
 
   function getPricingMethod() returns (bytes32 pm) {
+    require(msg.sender == owner);
     pm = pricingMethod;
   }
 
   function getIndex() returns (uint p, uint s) {
+    require(msg.sender == owner);
     p = index.prefix;
     s = index.suffix;
   }
 
   function getIndexFactor() returns (uint p, uint s) {
+    require(msg.sender == owner);
     p = indexFactor.prefix;
     s = indexFactor.suffix;
   }
 
   function getFixedPrice() returns (uint d, uint c) {
+    require(msg.sender == owner);
     d = fixedPrice.dollars;
     c = fixedPrice.cents;
   }
 
   function getPoint() returns (bytes32 p) {
+    require(msg.sender == owner);
     p = point;
   }
 
   function getComments() returns (bytes32 c) {
+    require(msg.sender == owner);
     c = comments;
   }
 
   function getVolume() returns (uint p, uint s) {
+    require(msg.sender == owner);
     p = volume.prefix;
     s = volume.suffix;
   }
 
   function getTotalVolume() returns (uint p, uint s) {
+    require(msg.sender == owner);
     p = totalVolume.prefix;
     s = totalVolume.suffix;
   }
 
   function getDealDate() returns (uint m, uint d, uint y) {
+    require(msg.sender == owner);
     m = dealDate.month;
     d = dealDate.day;
     y = dealDate.year;
   }
 
   function getTotalPrice() returns (uint d, uint c) {
+    require(msg.sender == owner);
     d = totalPrice.dollars;
     c = totalPrice.cents;
   }
 
   function getTrader() returns (bytes32 t) {
+    require(msg.sender == owner);
     t = trader;
   }
 
   function getEnteredOn() returns (uint m, uint d, uint y) {
+    require(msg.sender == owner);
     m = enteredOn.month;
     d = enteredOn.day;
     y = enteredOn.year;
