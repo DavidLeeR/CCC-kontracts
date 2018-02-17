@@ -50,6 +50,10 @@ contract CurrentC {
     return newDeploy;
   }
 
+  function acceptTrade(address tradeAddress, bool a) internal {
+    
+  }
+
   //returns address of owner of main CCC contract
   function getOwner() returns (address o) {
     o = owner;
@@ -75,8 +79,8 @@ contract CurrentC {
 
   //returns the string "Firm" if trade is firm, "Non-Firm" if not
   function getTradeFirmInfo(uint index) private returns (string f) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bool firm = tradecontract.getFirm();
     
@@ -93,24 +97,24 @@ contract CurrentC {
 
   //returns month, day, and year (all uint) representing trade contract start date
   function getTradeStartDateInfo(uint index) private returns (uint m, uint d, uint y) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (m,d,y) = tradecontract.getStartDate();
   }
 
     //returns month, day, and year (all uint) representing trade contract end date
   function getTradeEndDateInfo(uint index)  private returns (uint m, uint d, uint y) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (m,d,y) = tradecontract.getEndDate();
   }
 
   //returns the pipe of the trade at given index
   function getTradePipeInfo(uint index) private returns (string p) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 pipe = tradecontract.getPipe();
     p = bytes32ToString(pipe);
@@ -118,8 +122,8 @@ contract CurrentC {
 
   //returns the counterparty of the trade at given index
   function getTradeCounterPartyInfo(uint index) private returns (string cp) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 counterParty = tradecontract.getCounterParty();
     cp = bytes32ToString(counterParty);
@@ -127,17 +131,17 @@ contract CurrentC {
 
   //returns the counterparty address of the trade at given index
   function getTradeCounterPartyAddressInfo(uint index) private returns (address cpa) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
-    address counterPartyAddress = tradecontract.getCounterPartyAdd();
+    address counterPartyAddress = tradecontract.getCounterPartyAddress();
     cpa = counterPartyAddress;
   }
 
   //returns the party of the trade at given index
   function getTradePartyInfo(uint index) private returns (string p) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 party = tradecontract.getParty();
     p = bytes32ToString(party);
@@ -145,17 +149,17 @@ contract CurrentC {
 
   //returns the counter party address of the trade at given index
   function getTradePartyAddressInfo(uint index) private returns (address pa) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
-    address partyAddress = tradecontract.getPartyAdd();
+    address partyAddress = tradecontract.getPartyAddress();
     pa = partyAddress;
   }
 
   //returns the contact of the trade at given index
   function getTradeContactInfo(uint index) private returns (string c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 contact = tradecontract.getContact();
     c = bytes32ToString(contact);
@@ -163,8 +167,8 @@ contract CurrentC {
 
   //returns the pricing method of the trade at given index
   function getTradePricingMethodInfo(uint index) private returns (string pm) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 pricingMethod = tradecontract.getPricingMethod();
     pm = bytes32ToString(pricingMethod);
@@ -172,32 +176,32 @@ contract CurrentC {
 
   //returns the trade index of the trade at given index
   function getTradeIndexInfo(uint index) private returns (uint p, uint s) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (p,s) = tradecontract.getIndex();
   }
 
   //returns the trade index of the trade at given index
   function getTradeIndexFactorInfo(uint index) private returns (uint p, uint s) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (p,s) = tradecontract.getIndexFactor();
   }
 
   //returns thefixed price of the trade at given index
   function getTradeFixedPriceInfo(uint index) private returns (uint d, uint c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (d,c) = tradecontract.getFixedPrice();
   }
 
   //returns the point of the trade at given index
   function getTradePointInfo(uint index) private returns (string p) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 point = tradecontract.getPoint();
     p = bytes32ToString(point);
@@ -205,16 +209,16 @@ contract CurrentC {
 
   //returns the volume of the trade at given index
   function getTradeVolumeInfo(uint index) private returns (uint d, uint c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (d,c) = tradecontract.getVolume();
   }
 
   //returns the comments of the trade at given index
   function getTradeComments(uint index) private returns (string c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 comments = tradecontract.getComments();
     c = bytes32ToString(comments);
@@ -222,32 +226,32 @@ contract CurrentC {
 
   //returns the volume of the trade at given index
   function getTradeTotalVolumeInfo(uint index) private returns (uint d, uint c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (d,c) = tradecontract.getTotalVolume();
   }
 
   //returns month, day, and year (all uint) representing trade contract deal date
   function getTradeDealDateInfo(uint index) private returns (uint m, uint d, uint y) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (m,d,y) = tradecontract.getDealDate();
   }
 
   //returns the total price of the trade at given index
   function getTradeTotalPriceInfo(uint index) private returns (uint d, uint c) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (d,c) = tradecontract.getTotalPrice();
   }
   
   //returns the trader of the trade at given index
   function getTradeTrader(uint index) private returns (string t) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     bytes32 trader = tradecontract.getTrader();
     t = bytes32ToString(trader);
@@ -255,8 +259,8 @@ contract CurrentC {
 
   //returns month, day, and year (all uint) representing trade contract entered on date **Note: could make this automatic**
   function getTradeEnteredOnInfo(uint index) private returns (uint m, uint d, uint y) {
-    address tradeAdd = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAdd);
+    address tradeAddress = tradeHistory[index]; 
+    TradeContract tradecontract = TradeContract(tradeAddress);
 
     (m,d,y) = tradecontract.getEnteredOn();
   }
@@ -306,12 +310,12 @@ contract TradeContract {
   //10
   bytes32 counterParty;
 
-  address counterPartyAdd;
+  address counterPartyAddress;
 
   //10.b
   bytes32 party;
 
-  address partyAdd;
+  address partyAddress;
 
   //11
   bytes32 contact;
@@ -359,9 +363,9 @@ contract TradeContract {
     setEndDate(1,1,1);
     setPipe("pipe");
     setCounterParty("counterparty");
-    setCounterPartyAdd(cp);
+    setCounterPartyAddress(cp);
     setParty("party");
-    setPartyAdd(p);
+    setPartyAddress(p);
     setContact("lee3");
     //setPortfolio("portolio");
     setPricingMethod("pricingmethod");
@@ -433,16 +437,16 @@ contract TradeContract {
     counterParty = cp;
   }
 
-  function setCounterPartyAdd(address cp) private {
-    counterPartyAdd = cp;
+  function setCounterPartyAddress(address cp) private {
+    counterPartyAddress = cp;
   }
 
   function setParty(bytes32 p) private {
     party = p;
   }
 
-  function setPartyAdd(address p) private {
-    partyAdd = p;
+  function setPartyAddress(address p) private {
+    partyAddress = p;
   }
 
   function setContact(bytes32 c) private {
@@ -541,9 +545,9 @@ contract TradeContract {
     cp = counterParty;
   }
 
-  function getCounterPartyAdd() returns (address cp) {
+  function getCounterPartyAddress() returns (address cp) {
     require(msg.sender == owner);
-    cp = counterPartyAdd;
+    cp = counterPartyAddress;
   }
 
   function getParty() returns (bytes32 p) {
@@ -551,9 +555,9 @@ contract TradeContract {
     p = party;
   }
 
-  function getPartyAdd() returns (address p) {
+  function getPartyAddress() returns (address p) {
     require(msg.sender == owner);
-    p = partyAdd;
+    p = partyAddress;
   }
 
   function getContact() returns (bytes32 c) {
@@ -629,5 +633,9 @@ contract TradeContract {
     m = enteredOn.month;
     d = enteredOn.day;
     y = enteredOn.year;
+  }
+
+  function acceptTrade(bool a) {
+    require(msg.sender == counterPartyAddress);
   }
 }
