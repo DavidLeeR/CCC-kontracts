@@ -73,7 +73,7 @@ contract CurrentC {
   *************************************************************************************************************************/
 
   //returns the string "Firm" if trade is firm, "Non-Firm" if not
-  function getTradeFirmInfo(uint index) returns (string f) {
+  function getTradeFirmInfo(uint index) private returns (string f) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -91,7 +91,7 @@ contract CurrentC {
   }
 
   //returns month, day, and year (all uint) representing trade contract start date
-  function getTradeStartDateInfo(uint index) returns (uint m, uint d, uint y) {
+  function getTradeStartDateInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -99,7 +99,7 @@ contract CurrentC {
   }
 
     //returns month, day, and year (all uint) representing trade contract end date
-  function getTradeEndDateInfo(uint index) returns (uint m, uint d, uint y) {
+  function getTradeEndDateInfo(uint index)  private returns (uint m, uint d, uint y) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -107,7 +107,7 @@ contract CurrentC {
   }
 
   //returns the pipe of the trade at given index
-  function getTradePipeInfo(uint index) returns (string p) {
+  function getTradePipeInfo(uint index) private returns (string p) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -116,7 +116,7 @@ contract CurrentC {
   }
 
   //returns the counterparty of the trade at given index
-  function getTradeCounterPartyInfo(uint index) returns (string cp) {
+  function getTradeCounterPartyInfo(uint index) private returns (string cp) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -125,7 +125,7 @@ contract CurrentC {
   }
 
   //returns the counterparty address of the trade at given index
-  function getTradeCounterPartyAddressInfo(uint index) returns (address cpa) {
+  function getTradeCounterPartyAddressInfo(uint index) private returns (address cpa) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -134,7 +134,7 @@ contract CurrentC {
   }
 
   //returns the party of the trade at given index
-  function getTradePartyInfo(uint index) returns (string p) {
+  function getTradePartyInfo(uint index) private returns (string p) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -143,7 +143,7 @@ contract CurrentC {
   }
 
   //returns the counter party address of the trade at given index
-  function getTradePartyAddressInfo(uint index) returns (address pa) {
+  function getTradePartyAddressInfo(uint index) private returns (address pa) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -152,7 +152,7 @@ contract CurrentC {
   }
 
   //returns the contact of the trade at given index
-  function getTradeContactInfo(uint index) returns (string c) {
+  function getTradeContactInfo(uint index) private returns (string c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -161,7 +161,7 @@ contract CurrentC {
   }
 
   //returns the pricing method of the trade at given index
-  function getTradePricingMethodInfo(uint index) returns (string pm) {
+  function getTradePricingMethodInfo(uint index) private returns (string pm) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -170,7 +170,7 @@ contract CurrentC {
   }
 
   //returns the trade index of the trade at given index
-  function getTradeIndexInfo(uint index) returns (uint p, uint s) {
+  function getTradeIndexInfo(uint index) private returns (uint p, uint s) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -178,7 +178,7 @@ contract CurrentC {
   }
 
   //returns the trade index of the trade at given index
-  function getTradeIndexFactorInfo(uint index) returns (uint p, uint s) {
+  function getTradeIndexFactorInfo(uint index) private returns (uint p, uint s) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -186,7 +186,7 @@ contract CurrentC {
   }
 
   //returns thefixed price of the trade at given index
-  function getTradeFixedPriceInfo(uint index) returns (uint d, uint c) {
+  function getTradeFixedPriceInfo(uint index) private returns (uint d, uint c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -194,7 +194,7 @@ contract CurrentC {
   }
 
   //returns the point of the trade at given index
-  function getTradePointInfo(uint index) returns (string p) {
+  function getTradePointInfo(uint index) private returns (string p) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -203,7 +203,7 @@ contract CurrentC {
   }
 
   //returns the volume of the trade at given index
-  function getTradeVolumeInfo(uint index) returns (uint d, uint c) {
+  function getTradeVolumeInfo(uint index) private returns (uint d, uint c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -211,7 +211,7 @@ contract CurrentC {
   }
 
   //returns the comments of the trade at given index
-  function getTradeComments(uint index) returns (string c) {
+  function getTradeComments(uint index) private returns (string c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -220,7 +220,7 @@ contract CurrentC {
   }
 
   //returns the volume of the trade at given index
-  function getTradeTotalVolumeInfo(uint index) returns (uint d, uint c) {
+  function getTradeTotalVolumeInfo(uint index) private returns (uint d, uint c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -228,7 +228,7 @@ contract CurrentC {
   }
 
   //returns month, day, and year (all uint) representing trade contract deal date
-  function getTradeDealDateInfo(uint index) returns (uint m, uint d, uint y) {
+  function getTradeDealDateInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -236,7 +236,7 @@ contract CurrentC {
   }
 
   //returns the total price of the trade at given index
-  function getTradeTotalPriceInfo(uint index) returns (uint d, uint c) {
+  function getTradeTotalPriceInfo(uint index) private returns (uint d, uint c) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -244,7 +244,7 @@ contract CurrentC {
   }
   
   //returns the trader of the trade at given index
-  function getTradeTrader(uint index) returns (string t) {
+  function getTradeTrader(uint index) private returns (string t) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
@@ -253,7 +253,7 @@ contract CurrentC {
   }
 
   //returns month, day, and year (all uint) representing trade contract entered on date **Note: could make this automatic**
-  function getTradeEnteredOnInfo(uint index) returns (uint m, uint d, uint y) {
+  function getTradeEnteredOnInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAdd = tradeHistory[index]; 
     TradeContract tradecontract = TradeContract(tradeAdd);
 
