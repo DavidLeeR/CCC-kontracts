@@ -86,6 +86,8 @@ contract AbstractTrade {
   //    of aut filling date here)
   dateStruct enteredOn;
 
+  //keeps track of if purchase or sell trade (0 if purchase, 1 if sell)
+  uint internalType;
 
   //dummy trade constructor for testing
   function AbstractTrade(address p, address cp) {
