@@ -72,10 +72,8 @@ contract CurrentC {
     uint i = 0;
 
     //see if trade address is in trade history address array
-    for (i; i < historyTracker;i++)
-    {
-      if (msg.sender == tradeHistory[i])
-      {
+    for (i; i < historyTracker;i++) {
+      if (msg.sender == tradeHistory[i]) {
         tradeCheck = 1;
       }
     }
@@ -120,13 +118,9 @@ contract CurrentC {
 
     bool firm = tradecontract.getFirm();
     
-    if (firm == true)
-    {
+    if (firm == true) {
       f = "Firm";
-    }
-
-    else if (firm == false)
-    {
+    } else if (firm == false) {
       f = "Non-Firm";
     }
   }
