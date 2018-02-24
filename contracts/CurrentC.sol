@@ -1,6 +1,8 @@
 pragma solidity ^0.4.4;
 //Copyright © 2018 David Ramirez
 
+import "./AbstractTrade.sol";
+
 
 /*---------------------------------------------------------------------
                            Main Contract 
@@ -44,14 +46,24 @@ contract CurrentC {
     return string(bytesStringTrimmed);
 }
 
-  //makes a trade contract between 2 parties and adds to trade history
-  function makeTrade(address receiver) payable returns(address tradeContractAddress) {
+  //makes a purchase trade contract between 2 parties and adds to trade history
+  function makePurchaseTrade(address receiver) payable returns(address tradeContractAddress) {
     require(msg.sender == owner);
-    address newDeploy =  new TradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
+    address newDeploy =  new PurchaseTradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
     tradeHistory.push(newDeploy);
     historyTracker += 1;
     return newDeploy;
   }
+
+  //makes a sell trade contract between 2 parties and adds to trade history
+  function makeSellTrade(address receiver) returns(address tradeContractAddress) {
+    require(msg.sender == owner);
+    address newDeploy =  new SellTradeContract(owner, receiver);//tradeHistory[tradeNum - 1];
+    tradeHistory.push(newDeploy);
+    historyTracker += 1;
+    return newDeploy;
+  }
+
 
   //adds trade to acceptedTradeHistory array, making it accepted by both parties (must be called by a tradeContract
   //in the tradeHistory array)
@@ -60,10 +72,8 @@ contract CurrentC {
     uint i = 0;
 
     //see if trade address is in trade history address array
-    for (i; i < historyTracker;i++)
-    {
-      if (msg.sender == tradeHistory[i])
-      {
+    for (i; i < historyTracker;i++) {
+      if (msg.sender == tradeHistory[i]) {
         tradeCheck = 1;
       }
     }
@@ -90,7 +100,8 @@ contract CurrentC {
   }
 
   //return address of trade contract at trade history index given 
-  function getHistory(uint index) private returns (address t) {
+  function getHistory(uint index) returns (address t) {
+    require(msg.sender == owner);
     if (index <= (historyTracker - 1)) {
       t = tradeHistory[index];
     }
@@ -104,17 +115,13 @@ contract CurrentC {
   //returns the string "Firm" if trade is firm, "Non-Firm" if not
   function getTradeFirmInfo(uint index) private returns (string f) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bool firm = tradecontract.getFirm();
     
-    if (firm == true)
-    {
+    if (firm == true) {
       f = "Firm";
-    }
-
-    else if (firm == false)
-    {
+    } else if (firm == false) {
       f = "Non-Firm";
     }
   }
@@ -122,7 +129,7 @@ contract CurrentC {
   //returns month, day, and year (all uint) representing trade contract start date
   function getTradeStartDateInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (m,d,y) = tradecontract.getStartDate();
   }
@@ -130,7 +137,7 @@ contract CurrentC {
     //returns month, day, and year (all uint) representing trade contract end date
   function getTradeEndDateInfo(uint index)  private returns (uint m, uint d, uint y) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (m,d,y) = tradecontract.getEndDate();
   }
@@ -138,7 +145,7 @@ contract CurrentC {
   //returns the pipe of the trade at given index
   function getTradePipeInfo(uint index) private returns (string p) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 pipe = tradecontract.getPipe();
     p = bytes32ToString(pipe);
@@ -147,7 +154,7 @@ contract CurrentC {
   //returns the counterparty of the trade at given index
   function getTradeCounterPartyInfo(uint index) private returns (string cp) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 counterParty = tradecontract.getCounterParty();
     cp = bytes32ToString(counterParty);
@@ -156,7 +163,7 @@ contract CurrentC {
   //returns the counterparty address of the trade at given index
   function getTradeCounterPartyAddressInfo(uint index) private returns (address cpa) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     address counterPartyAddress = tradecontract.getCounterPartyAddress();
     cpa = counterPartyAddress;
@@ -165,7 +172,7 @@ contract CurrentC {
   //returns the party of the trade at given index
   function getTradePartyInfo(uint index) private returns (string p) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 party = tradecontract.getParty();
     p = bytes32ToString(party);
@@ -174,7 +181,7 @@ contract CurrentC {
   //returns the counter party address of the trade at given index
   function getTradePartyAddressInfo(uint index) private returns (address pa) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     address partyAddress = tradecontract.getPartyAddress();
     pa = partyAddress;
@@ -183,7 +190,7 @@ contract CurrentC {
   //returns the contact of the trade at given index
   function getTradeContactInfo(uint index) private returns (string c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 contact = tradecontract.getContact();
     c = bytes32ToString(contact);
@@ -192,7 +199,7 @@ contract CurrentC {
   //returns the pricing method of the trade at given index
   function getTradePricingMethodInfo(uint index) private returns (string pm) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 pricingMethod = tradecontract.getPricingMethod();
     pm = bytes32ToString(pricingMethod);
@@ -201,7 +208,7 @@ contract CurrentC {
   //returns the trade index of the trade at given index
   function getTradeIndexInfo(uint index) private returns (uint p, uint s) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (p,s) = tradecontract.getIndex();
   }
@@ -209,7 +216,7 @@ contract CurrentC {
   //returns the trade index of the trade at given index
   function getTradeIndexFactorInfo(uint index) private returns (uint p, uint s) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (p,s) = tradecontract.getIndexFactor();
   }
@@ -217,7 +224,7 @@ contract CurrentC {
   //returns thefixed price of the trade at given index
   function getTradeFixedPriceInfo(uint index) private returns (uint d, uint c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (d,c) = tradecontract.getFixedPrice();
   }
@@ -225,7 +232,7 @@ contract CurrentC {
   //returns the point of the trade at given index
   function getTradePointInfo(uint index) private returns (string p) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 point = tradecontract.getPoint();
     p = bytes32ToString(point);
@@ -234,7 +241,7 @@ contract CurrentC {
   //returns the volume of the trade at given index
   function getTradeVolumeInfo(uint index) private returns (uint d, uint c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (d,c) = tradecontract.getVolume();
   }
@@ -242,7 +249,7 @@ contract CurrentC {
   //returns the comments of the trade at given index
   function getTradeComments(uint index) private returns (string c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 comments = tradecontract.getComments();
     c = bytes32ToString(comments);
@@ -251,7 +258,7 @@ contract CurrentC {
   //returns the volume of the trade at given index
   function getTradeTotalVolumeInfo(uint index) private returns (uint d, uint c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (d,c) = tradecontract.getTotalVolume();
   }
@@ -259,7 +266,7 @@ contract CurrentC {
   //returns month, day, and year (all uint) representing trade contract deal date
   function getTradeDealDateInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (m,d,y) = tradecontract.getDealDate();
   }
@@ -267,7 +274,7 @@ contract CurrentC {
   //returns the total price of the trade at given index
   function getTradeTotalPriceInfo(uint index) private returns (uint d, uint c) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (d,c) = tradecontract.getTotalPrice();
   }
@@ -275,7 +282,7 @@ contract CurrentC {
   //returns the trader of the trade at given index
   function getTradeTrader(uint index) private returns (string t) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     bytes32 trader = tradecontract.getTrader();
     t = bytes32ToString(trader);
@@ -284,7 +291,7 @@ contract CurrentC {
   //returns month, day, and year (all uint) representing trade contract entered on date **Note: could make this automatic**
   function getTradeEnteredOnInfo(uint index) private returns (uint m, uint d, uint y) {
     address tradeAddress = tradeHistory[index]; 
-    TradeContract tradecontract = TradeContract(tradeAddress);
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (m,d,y) = tradecontract.getEnteredOn();
   }
@@ -292,375 +299,17 @@ contract CurrentC {
 
 
 /*---------------------------------------------------------------------
-                       Contract for Each Trade
+                       Contract for Each Purchase Trade
 -----------------------------------------------------------------------*/
-contract TradeContract {
-
-  //for date type
-  struct dateStruct {
-    uint month;
-    uint day;
-    uint year;
-  }
-
-  //for price type
-  struct priceStruct {
-    uint dollars;
-    uint cents;
-  }
-
-  //for float type (floats not yet supported by solidity, cannot do math with this struct, set and read only)
-  struct decimalNumberStruct {
-    uint prefix;
-    uint suffix;
-  }
-
-/***********************************************
-          MEMBER VARIABLE DECLARATIONS         
-************************************************/
-  address owner;
-  //6
-  bool firm;
-
-  //7 
-  dateStruct startDate;
-
-  //8 
-  dateStruct endDate;
-
-  //9 
-  bytes32 pipe;
-
-  //10
-  bytes32 counterParty;
-
-  address counterPartyAddress;
-
-  //10.b
-  bytes32 party;
-
-  address partyAddress;
-
-  //11
-  bytes32 contact;
-
-  //13
-  bytes32 pricingMethod;
-
-  //14 
-  decimalNumberStruct index;
-
-  //15
-  decimalNumberStruct indexFactor;
-
-  //16 
-  priceStruct fixedPrice;
-  //17 (not sure what this parameter is, need to consult Tim)
-  bytes32 point;
-
-  decimalNumberStruct volume;
-
-  //18
-  bytes32 comments;
-
-  //19 (solidity does not yet support fixed point numbers)
-  decimalNumberStruct totalVolume;
-
-  //20
-  dateStruct dealDate;
-
-  //21 
-  priceStruct totalPrice;
-
-  //22
-  bytes32 trader;
-
-  //23 (seems to be auto filled in front end, will just get from there instead
-  //    of aut filling date here)
-  dateStruct enteredOn;
-
-
-  //dummy trade constructor for testing
-  function TradeContract(address p, address cp) {
-    setFirm(true);
-    setStartDate(1,1,1);
-    setEndDate(1,1,1);
-    setPipe("pipe");
-    setCounterParty("counterparty");
-    setCounterPartyAddress(cp);
-    setParty("party");
-    setPartyAddress(p);
-    setContact("lee3");
-    //setPortfolio("portolio");
-    setPricingMethod("pricingmethod");
-    setIndex(1,1);
-    setIndexFactor(1,1);
-    setPoint("point");
-    setVolume(1,1);
-    setFixedPrice(1,1);
-    setComments("comment");
-    setTotalVolume(1,1);
-    setTotalPrice(1,1);
-    owner = msg.sender;
-  }
-
-  //real use constructor requiring all required parts of trade
-  /*function TradeContract(bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
-                        string counterParty, address counterPartyAddress, string party, address partyAddress, string contact, string pricingMethod,
-                        uint indexP, uint indexS, uint indexFactorP, uint indexFactorS, string point, uint volumeP, uint volumeS, uint fixedPriceD,
-                        uint fixedPriceC, string comments, uint totalVolumeP, uint TotalVolumeS) {
-
-                          setFirm(firm);
-                          setStartDate(startDateM, startDateD, startDateY);
-                          setEndDate(endDateM, endDateD, endDateY);
-                          setPipe(pipe);
-                          setCounterParty(counterParty);
-                          setCounterPartyAdd(counterPartyAddress);
-                          setParty(party);
-                          setPartyAdd(partyAddress);
-                          setContact(contact);
-                          setPricingMethod(pricingMethod);
-                          setIndex(indexP, indexS);
-                          setIndexFactor(indexFactorP, indexFactorS);
-                          setPoint(point);
-                          setVolume(volumeP, volumeS);
-                          setFixedPrice(fixedPriceD, fixedPriceC);
-                          setComments(comments);
-                          setTotalVolume(totalVolumeP, totalVolumeS);
-                        } 
-                        */
-
-
-
-
-/***********************************************
-                 SET FUNCTIONS                   
-************************************************/
-
-  function setFirm(bool f) private {
-    firm = f;
-  }
-
-  function setStartDate(uint m, uint d, uint y) private {
-    startDate.month = m;
-    startDate.day = d;
-    startDate.year = y;
-  }
-
-  function setEndDate(uint m, uint d, uint y) private {
-    endDate.month = m;
-    endDate.day = d;
-    endDate.year = y;
-  }
-
-  function setPipe(bytes32 p) private {
-    pipe = p;
-  }
-
-  function setCounterParty(bytes32 cp) private {
-    counterParty = cp;
-  }
-
-  function setCounterPartyAddress(address cp) private {
-    counterPartyAddress = cp;
-  }
-
-  function setParty(bytes32 p) private {
-    party = p;
-  }
-
-  function setPartyAddress(address p) private {
-    partyAddress = p;
-  }
-
-  function setContact(bytes32 c) private {
-    contact = c;
-  }
-
-  function setPricingMethod(bytes32 pm) private {
-    pricingMethod = pm;
-  }
-
-  function setIndex(uint p, uint s) private {
-    index.prefix = p;
-    index.suffix = s;
-  }
-
-  function setIndexFactor(uint p, uint s) private {
-    indexFactor.prefix = p;
-    indexFactor.suffix = s;
-  }
-
-  function setFixedPrice(uint d, uint c) private {
-    fixedPrice.dollars = d;
-    fixedPrice.cents = c;
-  }
-
-  function setPoint(bytes32 p) private {
-    point = p;
-  }
-
-  function setVolume(uint p, uint s) private {
-    volume.prefix = p;
-    volume.suffix = s;
-  }
-
-  function setComments(bytes32 c) private {
-    comments = c;
-  }
-
-  function setTotalVolume(uint p, uint s) private {
-    totalVolume.prefix = p;
-    totalVolume.suffix = s;
-  }
-
-  function setDealDate(uint m, uint d, uint y) private {
-    dealDate.month = m;
-    dealDate.day = d;
-    dealDate.year = y;
-  }
-
-  function setTotalPrice(uint d, uint c) private {
-    totalPrice.dollars = d;
-    totalPrice.cents = c;
-  }
-
-  function setTrader(bytes32 t) private {
-    trader = t;
-  }
-
-  function setEnteredOn(uint m, uint d, uint y) private {
-    enteredOn.month = m;
-    enteredOn.day = d;
-    enteredOn.year = y;
-  }
-
-
-/***********************************************
-                 GET FUNCTIONS                   
-************************************************/
-
-  function getFirm() returns (bool f) {
-    require(msg.sender == owner);
-    f = firm;
-  }
-
-  function getStartDate() returns (uint m, uint d, uint y) {
-    require(msg.sender == owner);
-    m = startDate.month;
-    d = startDate.day;
-    y = startDate.year;
-  }
-
-  function getEndDate() returns (uint m, uint d, uint y) {
-    require(msg.sender == owner);
-    m = endDate.month;
-    d = endDate.day;
-    y = endDate.year;
-  }
-
-  function getPipe() returns (bytes32 p) {
-    require(msg.sender == owner);
-    p = pipe;
-  }
-
-  function getCounterParty() returns (bytes32 cp) {
-    require(msg.sender == owner);
-    cp = counterParty;
-  }
-
-  function getCounterPartyAddress() returns (address cp) {
-    require(msg.sender == owner);
-    cp = counterPartyAddress;
-  }
-
-  function getParty() returns (bytes32 p) {
-    require(msg.sender == owner);
-    p = party;
-  }
-
-  function getPartyAddress() returns (address p) {
-    require(msg.sender == owner);
-    p = partyAddress;
-  }
-
-  function getContact() returns (bytes32 c) {
-    require(msg.sender == owner);
-    c = contact;
-  }
-
-  function getPricingMethod() returns (bytes32 pm) {
-    require(msg.sender == owner);
-    pm = pricingMethod;
-  }
-
-  function getIndex() returns (uint p, uint s) {
-    require(msg.sender == owner);
-    p = index.prefix;
-    s = index.suffix;
-  }
-
-  function getIndexFactor() returns (uint p, uint s) {
-    require(msg.sender == owner);
-    p = indexFactor.prefix;
-    s = indexFactor.suffix;
-  }
-
-  function getFixedPrice() returns (uint d, uint c) {
-    require(msg.sender == owner);
-    d = fixedPrice.dollars;
-    c = fixedPrice.cents;
-  }
-
-  function getPoint() returns (bytes32 p) {
-    require(msg.sender == owner);
-    p = point;
-  }
-
-  function getComments() returns (bytes32 c) {
-    require(msg.sender == owner);
-    c = comments;
-  }
-
-  function getVolume() returns (uint p, uint s) {
-    require(msg.sender == owner);
-    p = volume.prefix;
-    s = volume.suffix;
-  }
-
-  function getTotalVolume() returns (uint p, uint s) {
-    require(msg.sender == owner);
-    p = totalVolume.prefix;
-    s = totalVolume.suffix;
-  }
-
-  function getDealDate() returns (uint m, uint d, uint y) {
-    require(msg.sender == owner);
-    m = dealDate.month;
-    d = dealDate.day;
-    y = dealDate.year;
-  }
-
-  function getTotalPrice() returns (uint d, uint c) {
-    require(msg.sender == owner);
-    d = totalPrice.dollars;
-    c = totalPrice.cents;
-  }
-
-  function getTrader() returns (bytes32 t) {
-    require(msg.sender == owner);
-    t = trader;
-  }
-
-  function getEnteredOn() returns (uint m, uint d, uint y) {
-    require(msg.sender == owner);
-    m = enteredOn.month;
-    d = enteredOn.day;
-    y = enteredOn.year;
+contract PurchaseTradeContract is AbstractTrade {
+
+  //dummy trade constructor for testing 
+  function PurchaseTradeContract(address p, address cp) AbstractTrade(p, cp) {
+    internalType = 0;
   }
 
   //function for the counter party to accept the trade, calls main contract to add trade address to array
-  function acceptTrade() {
+  function acceptTrade() payable {
     //caller of this function must be the counter party
     require(msg.sender == counterPartyAddress);
     address mainInterfaceAddress = owner; 
@@ -672,3 +321,28 @@ contract TradeContract {
     selfdestruct(counterPartyAddress);
   }
 }
+
+/*---------------------------------------------------------------------
+                       Contract for Each Sell Trade
+-----------------------------------------------------------------------*/
+contract SellTradeContract is AbstractTrade {
+
+  //dummy trade constructor for testing 
+  function SellTradeContract(address p, address cp) AbstractTrade(p, cp) {
+    internalType = 1;
+  }
+
+  //function for the counter party to accept the trade, calls main contract to add trade address to array
+  function acceptTrade() payable {
+    //caller of this function must be the counter party
+    require(msg.sender == counterPartyAddress);
+    address mainInterfaceAddress = owner; 
+    CurrentC currentc = CurrentC(mainInterfaceAddress);
+
+    currentc.acceptTradeMain();
+
+    //makes contract read only, sending all funds it contains to the party 
+    selfdestruct(partyAddress);
+  }
+}
+
