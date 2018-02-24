@@ -100,7 +100,8 @@ contract CurrentC {
   }
 
   //return address of trade contract at trade history index given 
-  function getHistory(uint index) private returns (address t) {
+  function getHistory(uint index) returns (address t) {
+    require(msg.sender == owner);
     if (index <= (historyTracker - 1)) {
       t = tradeHistory[index];
     }
