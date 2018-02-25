@@ -108,6 +108,26 @@ contract CurrentC {
   }
 
   /***********************************************************************************************************************
+  *  All of the following "searchBy" functions search each any trade (not just accepted) for input parameter, return     *
+  *  all trade info if found, return -1 if no results found                                                              *
+  ************************************************************************************************************************/
+
+  function searchByStartDate(uint m, uint d, uint y) returns (address owner, bool firm, uint startDateM, uint startDateD, uint startDateY,
+                                                        uint endDateM, uint endDateD, uint endDateY, string pipe, string counterParty,
+                                                        address counterPartAddress, string contact, string pricingMethod, uint indexP,
+                                                        uint indexS, uint indexFactorP, uint indexFactorS, uint fixedPriceD, uint fixedPriceC,
+                                                        string point, uint volumeP, uint volumeS, string comments, uint totalVolumeP,
+                                                        uint totalVolumeS, uint dealDateM, uint dealDateD, uint dealDateY, uint totalPriceD,
+                                                        uint totalPriceC, string trader, uint enteredOnM, uint enteredOnD, uint enteredOnY,
+                                                        uint internalType) {
+     require(msg.sender == owner);
+     uint i = 0;
+     for (i; i < historyTracker; i++) {
+       if (getTradeStartDateInfo(i))
+     }
+  }
+
+  /***********************************************************************************************************************
   *  All following "getTrade" functions return the info in readable form from the trade contract, these are needed to     *
   *  convert from bytes32 to string (ie. to read the info)                                                                *
   *************************************************************************************************************************/
