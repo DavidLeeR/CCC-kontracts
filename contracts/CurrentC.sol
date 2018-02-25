@@ -112,19 +112,23 @@ contract CurrentC {
   *  all trade info if found, return -1 if no results found                                                              *
   ************************************************************************************************************************/
 
-  function searchByStartDate(uint m, uint d, uint y) returns (address owner, bool firm, uint startDateM, uint startDateD, uint startDateY,
-                                                        uint endDateM, uint endDateD, uint endDateY, string pipe, string counterParty,
-                                                        address counterPartAddress, string contact, string pricingMethod, uint indexP,
-                                                        uint indexS, uint indexFactorP, uint indexFactorS, uint fixedPriceD, uint fixedPriceC,
-                                                        string point, uint volumeP, uint volumeS, string comments, uint totalVolumeP,
-                                                        uint totalVolumeS, uint dealDateM, uint dealDateD, uint dealDateY, uint totalPriceD,
-                                                        uint totalPriceC, string trader, uint enteredOnM, uint enteredOnD, uint enteredOnY,
-                                                        uint internalType) {
+  function searchByStartDate(uint m, uint d, uint y) returns (address[]) {
      require(msg.sender == owner);
+     address[] found;
+     uint m1;
+     uint d1;
+     uint y1;
      uint i = 0;
+     uint k = 0;
      for (i; i < historyTracker; i++) {
-       if (getTradeStartDateInfo(i))
+       (m1, d1, y1) = getTradeStartDateInfo(i);
+       if (m1 == m && d1 == d && y1 == y) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
      }
+
+    return found;
   }
 
   /***********************************************************************************************************************
