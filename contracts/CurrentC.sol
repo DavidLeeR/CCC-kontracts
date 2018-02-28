@@ -44,7 +44,12 @@ contract CurrentC {
         bytesStringTrimmed[j] = bytesString[j];
     }
     return string(bytesStringTrimmed);
-}
+  }
+
+  //function for comparing strings
+  function compareStrings (string a, string b) returns (bool){
+       return keccak256(a) == keccak256(b);
+  }
 
   //makes a purchase trade contract between 2 parties and adds to trade history
   function makePurchaseTrade(address receiver) payable returns(address tradeContractAddress) {
@@ -135,12 +140,12 @@ contract CurrentC {
   function searchByParty(string p) returns (address[]) {
      require(msg.sender == owner);
      address[] found;
-     string pt;
+     string memory pt;
      uint i = 0;
      uint k = 0;
      for (i; i < historyTracker; i++) {
        pt = getTradePartyInfo(i);
-       if (p == pt) {
+       if (compareStrings(p,pt) == true) {
          found[k] = tradeHistory[i];
          k++;
        }
