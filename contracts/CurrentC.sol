@@ -44,7 +44,12 @@ contract CurrentC {
         bytesStringTrimmed[j] = bytesString[j];
     }
     return string(bytesStringTrimmed);
-}
+  }
+
+  //function for comparing strings
+  function compareStrings (string a, string b) returns (bool){
+       return keccak256(a) == keccak256(b);
+  }
 
   //makes a purchase trade contract between 2 parties and adds to trade history
   function makePurchaseTrade(address receiver) payable returns(address tradeContractAddress) {
@@ -105,6 +110,104 @@ contract CurrentC {
     if (index <= (historyTracker - 1)) {
       t = tradeHistory[index];
     }
+  }
+
+  /***********************************************************************************************************************
+  *  All of the following "searchBy" functions search each trade (not just accepted) for input parameter and return      *
+  *  all the matching Trade Contracts' addresses in an array                                                             *
+  ************************************************************************************************************************/
+  //returns array of Trade Contract addresses that have start date matching function parameters
+  function searchByStartDate(uint m, uint d, uint y) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     uint m1;
+     uint d1;
+     uint y1;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       (m1, d1, y1) = getTradeStartDateInfo(i);
+       if (m1 == m && d1 == d && y1 == y) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
+  }
+
+  //returns array of Trade Contract addresses that have deal date matching function parameters
+  function searchByDealDate(uint m, uint d, uint y) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     uint m1;
+     uint d1;
+     uint y1;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       (m1, d1, y1) = getTradeDealDateInfo(i);
+       if (m1 == m && d1 == d && y1 == y) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
+  }
+
+  //returns array of Trade Contract addresses that have party matching function parameters
+  function searchByParty(string p) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     string memory pt;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       pt = getTradePartyInfo(i);
+       if (compareStrings(p,pt) == true) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
+  }
+
+  //returns array of Trade Contract addresses that have counterparty matching function parameters
+  function searchByCounterParty(string cp) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     string memory cpt;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       cpt = getTradeCounterPartyInfo(i);
+       if (compareStrings(cp,cpt) == true) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
+  }
+
+  //returns array of Trade Contract addresses that have counterparty matching function parameters
+  function searchByContact(string c) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     string memory ct;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       ct = getTradeContactInfo(i);
+       if (compareStrings(c,ct) == true) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
   }
 
   /***********************************************************************************************************************

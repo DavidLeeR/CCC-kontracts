@@ -41,11 +41,11 @@ contract('currentc', function(accounts) {
         }).then(function(result){
             //trade number should be 2
             console.log("trade number after 2nd trade (2) = ", result.toNumber());
-            //return current_c.getTradeTotalPriceInfo.call(1);
+            return current_c.searchByStartDate.call(1,1,1);
 
-        //}).then(function(result){
+        }).then(function(result){
             //should be 1,1
-          //  console.log("total price info for 2nd trade (1,1) = ", result[0].toNumber(), result[1].toNumber());
+            console.log("the search results = ", result[0].toNumber());
             //return current_c.getTradePricingMethodInfo.call(1);
 
         //}).then(function(result){
