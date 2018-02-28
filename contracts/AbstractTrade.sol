@@ -94,6 +94,7 @@ contract AbstractTrade {
     setFirm(true);
     setStartDate(1,1,1);
     setEndDate(1,1,1);
+    setDealDate(1,1,1);
     setPipe("pipe");
     setCounterParty("counterparty");
     setCounterPartyAddress(cp);
