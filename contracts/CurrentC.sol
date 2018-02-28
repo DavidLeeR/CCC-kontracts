@@ -113,8 +113,8 @@ contract CurrentC {
   }
 
   /***********************************************************************************************************************
-  *  All of the following "searchBy" functions search each any trade (not just accepted) for input parameter, return     *
-  *  all trade info if found, return -1 if no results found                                                              *
+  *  All of the following "searchBy" functions search each trade (not just accepted) for input parameter and return      *
+  *  all the matching Trade Contracts' addresses in an array                                                             *
   ************************************************************************************************************************/
   //returns array of Trade Contract addresses that have start date matching function parameters
   function searchByStartDate(uint m, uint d, uint y) returns (address[]) {
@@ -146,6 +146,24 @@ contract CurrentC {
      for (i; i < historyTracker; i++) {
        pt = getTradePartyInfo(i);
        if (compareStrings(p,pt) == true) {
+         found[k] = tradeHistory[i];
+         k++;
+       }
+     }
+
+    return found;
+  }
+
+    //returns array of Trade Contract addresses that have party matching function parameters
+  function searchByCounterParty(string cp) returns (address[]) {
+     require(msg.sender == owner);
+     address[] found;
+     string memory cpt;
+     uint i = 0;
+     uint k = 0;
+     for (i; i < historyTracker; i++) {
+       cpt = getTradePartyInfo(i);
+       if (compareStrings(cp,cpt) == true) {
          found[k] = tradeHistory[i];
          k++;
        }
