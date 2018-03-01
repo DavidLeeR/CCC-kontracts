@@ -115,6 +115,17 @@ contract CurrentC {
   /***********************************************************************************************************************
   *  The following 2 functions return the entire history array and the accepted history array (addresses)                *                                                            *
   ************************************************************************************************************************/
+  //return address array for all initiated trades
+  function getHistoryList() returns (address[]) {
+    require(msg.sender == owner);
+    return tradeHistory;
+  }
+
+  //return address array for all accepted trades
+  function getAcceptedHistoryList() returns (address[]) {
+    require(msg.sender == owner);
+    return acceptedTradeHistory;
+  }
 
   /***********************************************************************************************************************
   *  All of the following "searchBy" functions search each trade (not just accepted) for input parameter and return      *
