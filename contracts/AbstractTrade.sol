@@ -25,69 +25,69 @@ contract AbstractTrade {
 /***********************************************
           MEMBER VARIABLE DECLARATIONS         
 ************************************************/
-  address owner;
+  address internal owner;
   //6
-  bool firm;
+  bool internal firm;
 
   //7 
-  dateStruct startDate;
+  dateStruct internal startDate;
 
   //8 
-  dateStruct endDate;
+  dateStruct internal endDate;
 
   //9 
-  bytes32 pipe;
+  bytes32 internal pipe;
 
   //10
-  bytes32 counterParty;
+  bytes32 internal counterParty;
 
-  address counterPartyAddress;
+  address internal counterPartyAddress;
 
   //10.b
-  bytes32 party;
+  bytes32 internal party;
 
-  address partyAddress;
+  address internal partyAddress;
 
   //11
-  bytes32 contact;
+  bytes32 internal contact;
 
   //13
-  bytes32 pricingMethod;
+  bytes32 internal pricingMethod;
 
   //14 
-  decimalNumberStruct index;
+  decimalNumberStruct internal index;
 
   //15
-  decimalNumberStruct indexFactor;
+  decimalNumberStruct internal indexFactor;
 
   //16 
-  priceStruct fixedPrice;
+  priceStruct internal fixedPrice;
   //17 (not sure what this parameter is, need to consult Tim)
-  bytes32 point;
+  bytes32 internal point;
 
-  decimalNumberStruct volume;
+  decimalNumberStruct internal volume;
 
   //18
-  bytes32 comments;
+  bytes32 internal comments;
 
   //19 (solidity does not yet support fixed point numbers)
-  decimalNumberStruct totalVolume;
+  decimalNumberStruct internal totalVolume;
 
   //20
-  dateStruct dealDate;
+  dateStruct internal dealDate;
 
   //21 
-  priceStruct totalPrice;
+  priceStruct internal totalPrice;
 
   //22
-  bytes32 trader;
+  bytes32 internal trader;
 
   //23 (seems to be auto filled in front end, will just get from there instead
   //    of aut filling date here)
-  dateStruct enteredOn;
+  dateStruct internal enteredOn;
 
   //keeps track of if purchase or sell trade (0 if purchase, 1 if sell)
-  uint internalType;
+  uint internal internalType;
 
   //dummy trade constructor for testing
   function AbstractTrade(address p, address cp) {

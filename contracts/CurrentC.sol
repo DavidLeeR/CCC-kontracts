@@ -9,11 +9,11 @@ import "./AbstractTrade.sol";
 -----------------------------------------------------------------------*/
 contract CurrentC {
 
-  address owner;
-  address[] tradeHistory;
-  address[] acceptedTradeHistory;
-  uint historyTracker;
-  uint acceptedHistoryTracker;
+  address private owner;
+  address[] private tradeHistory;
+  address[] private acceptedTradeHistory;
+  uint private  historyTracker;
+  uint private acceptedHistoryTracker;
 
   //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
@@ -110,6 +110,21 @@ contract CurrentC {
     if (index <= (historyTracker - 1)) {
       t = tradeHistory[index];
     }
+  }
+
+  /***********************************************************************************************************************
+  *  The following 2 functions return the entire history array and the accepted history array (addresses)                *                                                            *
+  ************************************************************************************************************************/
+  //return address array for all initiated trades
+  function getHistoryList() returns (address[]) {
+    require(msg.sender == owner);
+    return tradeHistory;
+  }
+
+  //return address array for all accepted trades
+  function getAcceptedHistoryList() returns (address[]) {
+    require(msg.sender == owner);
+    return acceptedTradeHistory;
   }
 
   /***********************************************************************************************************************
