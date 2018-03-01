@@ -211,6 +211,39 @@ contract CurrentC {
   }
 
   /***********************************************************************************************************************
+  *  Returns all information for a trade                                                                                 *
+  ************************************************************************************************************************/
+  //THIS IS UNUSABLE< "STACK TOO DEEP" ERROR
+  /*function getAllTradeInfo(uint index) returns (bool firm, uint startDateM, uint startDateD, uint startDateY, uint endDateM, uint endDateD, uint endDateY, string pipe,
+                        string counterParty, address counterPartyAddress, string party, address partyAddress, string contact, string pricingMethod,
+                        uint indexP, uint indexS, uint indexFactorP, uint indexFactorS, string point, uint volumeP, uint volumeS, uint fixedPriceD,
+                        uint fixedPriceC, string comments, uint totalVolumeP, uint totalVolumeS) {
+    
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    firm = tradecontract.getFirm();
+    (startDateM, startDateD, startDateY) = tradecontract.getStartDate();
+    (endDateM, endDateD, endDateY) = tradecontract.getEndDate();
+    pipe = bytes32ToString(tradecontract.getPipe());
+    counterParty = bytes32ToString(tradecontract.getCounterParty());
+    counterPartyAddress = tradecontract.getCounterPartyAddress();
+    party = bytes32ToString(tradecontract.getParty());
+    partyAddress = tradecontract.getPartyAddress();
+    contact = bytes32ToString(tradecontract.getContact());
+    pricingMethod = bytes32ToString(tradecontract.getPricingMethod());
+    contact = bytes32ToString(tradecontract.getContact());
+    (indexP,indexS) = tradecontract.getIndex();
+    (indexFactorP, indexFactorS) = tradecontract.getIndexFactor();
+    point = bytes32ToString(tradecontract.getPoint());
+    (volumeP, volumeS) = tradecontract.getVolume();
+    (fixedPriceD, fixedPriceC) = tradecontract.getFixedPrice();
+    comments = bytes32ToString(tradecontract.getComments());
+    (totalVolumeP, totalVolumeS) = tradecontract.getTotalVolume();
+
+  }*/
+
+  /***********************************************************************************************************************
   *  All following "getTrade" functions return the info in readable form from the trade contract, these are needed to     *
   *  convert from bytes32 to string (ie. to read the info)                                                                *
   *************************************************************************************************************************/
