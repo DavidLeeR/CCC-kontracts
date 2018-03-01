@@ -113,6 +113,10 @@ contract CurrentC {
   }
 
   /***********************************************************************************************************************
+  *  The following 2 functions return the entire history array and the accepted history array (addresses)                *                                                            *
+  ************************************************************************************************************************/
+
+  /***********************************************************************************************************************
   *  All of the following "searchBy" functions search each trade (not just accepted) for input parameter and return      *
   *  all the matching Trade Contracts' addresses in an array                                                             *
   ************************************************************************************************************************/
