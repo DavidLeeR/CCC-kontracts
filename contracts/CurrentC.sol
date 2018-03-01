@@ -9,11 +9,11 @@ import "./AbstractTrade.sol";
 -----------------------------------------------------------------------*/
 contract CurrentC {
 
-  address owner;
-  address[] tradeHistory;
-  address[] acceptedTradeHistory;
-  uint historyTracker;
-  uint acceptedHistoryTracker;
+  address private owner;
+  address[] private tradeHistory;
+  address[] private acceptedTradeHistory;
+  uint private  historyTracker;
+  uint private acceptedHistoryTracker;
 
   //constructor: initializes number of trades for history to 0 and makes the address who deployed contract the owner
   function CurrentC() {
