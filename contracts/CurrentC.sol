@@ -192,7 +192,7 @@ contract CurrentC {
   //returns array of Trade Contract addresses that have counterparty matching function parameters
   function searchByCounterParty(string cp) returns (address[]) {
      require(msg.sender == owner);
-     address[] found;
+     address[] memory found;
      string memory cpt;
      uint i = 0;
      uint k = 0;
@@ -210,7 +210,7 @@ contract CurrentC {
   //returns array of Trade Contract addresses that have counterparty matching function parameters
   function searchByContact(string c) returns (address[]) {
      require(msg.sender == owner);
-     address[] found;
+     address[] memory found;
      string memory ct;
      uint i = 0;
      uint k = 0;
@@ -446,8 +446,176 @@ contract CurrentC {
 
     (m,d,y) = tradecontract.getEnteredOn();
   }
-}
 
+
+/***********************************************************************************************************************
+  *  All following "getByAdd" functions return the info in readable form from the trade contract, these are needed to     *
+  *  convert from bytes32 to string (ie. to read the info). The parameter here is an address, insted of index                                                                *
+  *************************************************************************************************************************/
+
+  //returns the string "Firm" if trade is firm, "Non-Firm" if not
+  function getByAddFirmInfo(address tradeAddress) public returns (string f) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bool firm = tradecontract.getFirm();
+    
+    if (firm == true) {
+      f = "Firm";
+    } else if (firm == false) {
+      f = "Non-Firm";
+    }
+  }
+
+  //returns month, day, and year (all uint) representing trade contract start date
+  function getByAddStartDateInfo(address tradeAddress) public returns (uint m, uint d, uint y) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (m,d,y) = tradecontract.getStartDate();
+  }
+
+  //returns month, day, and year (all uint) representing trade contract end date
+  function getByAddEndDateInfo(address tradeAddress)  public returns (uint m, uint d, uint y) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (m,d,y) = tradecontract.getEndDate();
+  }
+
+  //returns the pipe of the trade at given index
+  function getByAddPipeInfo(address tradeAddress) public returns (string p) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 pipe = tradecontract.getPipe();
+    p = bytes32ToString(pipe);
+  }
+
+  //returns the counterparty of the trade at given index
+  function getByAddCounterPartyInfo(address tradeAddress) public returns (string cp) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 counterParty = tradecontract.getCounterParty();
+    cp = bytes32ToString(counterParty);
+  }
+
+  //returns the counterparty address of the trade at given index
+  function getByAddCounterPartyAddressInfo(address tradeAddress) public returns (address cpa) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    address counterPartyAddress = tradecontract.getCounterPartyAddress();
+    cpa = counterPartyAddress;
+  }
+
+  //returns the party of the trade at given index
+  function getByAddPartyInfo(address tradeAddress) public returns (string p) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 party = tradecontract.getParty();
+    p = bytes32ToString(party);
+  }
+
+  //returns the counter party address of the trade at given index
+  function getByAddPartyAddressInfo(address tradeAddress) public returns (address pa) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    address partyAddress = tradecontract.getPartyAddress();
+    pa = partyAddress;
+  }
+
+  //returns the contact of the trade at given index
+  function getByAddContactInfo(address tradeAddress) public returns (string c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 contact = tradecontract.getContact();
+    c = bytes32ToString(contact);
+  }
+
+  //returns the pricing method of the trade at given index
+  function getByAddPricingMethodInfo(address tradeAddress) public returns (string pm) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 pricingMethod = tradecontract.getPricingMethod();
+    pm = bytes32ToString(pricingMethod);
+  }
+
+  //returns the trade index of the trade at given index
+  function getByAddIndexInfo(address tradeAddress) public returns (uint p, uint s) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (p,s) = tradecontract.getIndex();
+  }
+
+  //returns the trade index of the trade at given index
+  function getByAddIndexFactorInfo(address tradeAddress) public returns (uint p, uint s) { 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (p,s) = tradecontract.getIndexFactor();
+  }
+
+  //returns thefixed price of the trade at given index
+  function getByAddFixedPriceInfo(address tradeAddress) public returns (uint d, uint c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (d,c) = tradecontract.getFixedPrice();
+  }
+
+  //returns the point of the trade at given index
+  function getByAddPointInfo(address tradeAddress) public returns (string p) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 point = tradecontract.getPoint();
+    p = bytes32ToString(point);
+  }
+
+  //returns the volume of the trade at given index
+  function getByAddVolumeInfo(address tradeAddress) public returns (uint d, uint c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (d,c) = tradecontract.getVolume();
+  }
+
+  //returns the comments of the trade at given index
+  function getByAddComments(address tradeAddress) public returns (string c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 comments = tradecontract.getComments();
+    c = bytes32ToString(comments);
+  }
+
+  //returns the volume of the trade at given index
+  function getByAddTotalVolumeInfo(address tradeAddress) public returns (uint d, uint c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (d,c) = tradecontract.getTotalVolume();
+  }
+
+  //returns month, day, and year (all uint) representing trade contract deal date
+  function getByAddDealDateInfo(address tradeAddress) public returns (uint m, uint d, uint y) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (m,d,y) = tradecontract.getDealDate();
+  }
+
+  //returns the total price of the trade at given index
+  function getByAddTotalPriceInfo(address tradeAddress) public returns (uint d, uint c) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (d,c) = tradecontract.getTotalPrice();
+  }
+  
+  //returns the trader of the trade at given index
+  function getByAddTrader(address tradeAddress) public returns (string t) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 trader = tradecontract.getTrader();
+    t = bytes32ToString(trader);
+  }
+
+  //returns month, day, and year (all uint) representing trade contract entered on date **Note: could make this automatic**
+  function getByAddEnteredOnInfo(address tradeAddress) public returns (uint m, uint d, uint y) {
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    (m,d,y) = tradecontract.getEnteredOn();
+  }
+}
 
 /*---------------------------------------------------------------------
                        Contract for Each Purchase Trade
