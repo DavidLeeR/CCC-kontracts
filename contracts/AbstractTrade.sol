@@ -160,98 +160,119 @@ contract AbstractTrade {
 ************************************************/
 
   function setFirm(bool f) public {
+    require(msg.sender == partyAddress);
     firm = f;
   }
 
   function setStartDate(uint m, uint d, uint y) public {
+    require(msg.sender == partyAddress);
     startDate.month = m;
     startDate.day = d;
     startDate.year = y;
   }
 
   function setEndDate(uint m, uint d, uint y) public {
+    require(msg.sender == partyAddress);
     endDate.month = m;
     endDate.day = d;
     endDate.year = y;
   }
 
   function setPipe(bytes32 p) public {
+    require(msg.sender == partyAddress);
     pipe = p;
   }
 
   function setCounterParty(bytes32 cp) public {
+    require(msg.sender == partyAddress);
     counterParty = cp;
   }
 
   function setCounterPartyAddress(address cp) public {
+    require(msg.sender == partyAddress);
     counterPartyAddress = cp;
   }
 
   function setParty(bytes32 p) public {
+    require(msg.sender == partyAddress);
     party = p;
   }
 
   function setPartyAddress(address p) public {
+    require(msg.sender == partyAddress);
     partyAddress = p;
   }
 
   function setContact(bytes32 c) public {
+    require(msg.sender == partyAddress);
     contact = c;
   }
 
   function setPricingMethod(bytes32 pm) public {
+    require(msg.sender == partyAddress);
     pricingMethod = pm;
   }
 
   function setIndex(uint p, uint s) public {
+    require(msg.sender == partyAddress);
     index.prefix = p;
     index.suffix = s;
   }
 
   function setIndexFactor(uint p, uint s) public {
+    require(msg.sender == partyAddress);
     indexFactor.prefix = p;
     indexFactor.suffix = s;
   }
 
   function setFixedPrice(uint d, uint c) public {
+    require(msg.sender == partyAddress);
     fixedPrice.dollars = d;
     fixedPrice.cents = c;
   }
 
   function setPoint(bytes32 p) public {
+    require(msg.sender == partyAddress);
     point = p;
   }
 
   function setVolume(uint p, uint s) public {
+    require(msg.sender == partyAddress);
     volume.prefix = p;
     volume.suffix = s;
   }
 
   function setComments(bytes32 c) public {
+    require(msg.sender == partyAddress);
     comments = c;
   }
 
   function setTotalVolume(uint p, uint s) public {
+    require(msg.sender == partyAddress);
     totalVolume.prefix = p;
     totalVolume.suffix = s;
   }
 
   function setDealDate(uint m, uint d, uint y) public {
+    require(msg.sender == partyAddress);
     dealDate.month = m;
     dealDate.day = d;
     dealDate.year = y;
   }
 
   function setTotalPrice(uint d, uint c) public {
+    require(msg.sender == partyAddress);
     totalPrice.dollars = d;
     totalPrice.cents = c;
   }
 
   function setTrader(bytes32 t) public {
+    require(msg.sender == partyAddress);
     trader = t;
   }
 
   function setEnteredOn(uint m, uint d, uint y) public {
+    require(msg.sender == partyAddress);
     enteredOn.month = m;
     enteredOn.day = d;
     enteredOn.year = y;
