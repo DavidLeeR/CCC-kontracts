@@ -46,6 +46,18 @@ contract CurrentC {
     return string(bytesStringTrimmed);
   }
 
+  //converts string to bytes32
+  function stringToBytes32(string memory source) returns (bytes32 result) {
+    bytes memory tempEmptyStringTest = bytes(source);
+    if (tempEmptyStringTest.length == 0) {
+        return 0x0;
+    }
+
+    assembly {
+        result := mload(add(source, 32))
+    }
+}
+
   //function for comparing strings
   function compareStrings (string a, string b) returns (bool){
        return keccak256(a) == keccak256(b);
@@ -614,6 +626,186 @@ contract CurrentC {
     AbstractTrade tradecontract = AbstractTrade(tradeAddress);
 
     (m,d,y) = tradecontract.getEnteredOn();
+  }
+
+  /***********************************************************************************************************************
+  *  All following "setTrade" are required to fill out the trade params                                                  *
+  ************************************************************************************************************************/
+
+  //returns the string "Firm" if trade is firm, "Non-Firm" if not
+  function setTradeFirmInfo(uint index, bool f) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setFirm(f);
+  }
+
+  //returns month, day, and year (all uint) representing trade contract start date
+  function setTradeStartDateInfo(uint index, uint m, uint d, uint y) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setStartDate(m, d, y);
+  }
+
+    //returns month, day, and year (all uint) representing trade contract end date
+  function setTradeEndDateInfo(uint index, uint m, uint d, uint y) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setEndDate(m, d, y);
+  }
+
+  //returns the pipe of the trade at given index
+  function setTradePipeInfo(uint index, string p) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(p);
+    tradecontract.setPipe(temp);
+  }
+
+  //returns the counterparty of the trade at given index
+  function setTradeCounterPartyInfo(uint index, string cp) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(cp);
+    tradecontract.setCounterParty(temp);
+  }
+
+  //returns the counterparty address of the trade at given index
+  function setTradeCounterPartyAddressInfo(uint index, address cpa) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setCounterPartyAddress(cpa);
+  }
+
+  //returns the party of the trade at given index
+  function setTradePartyInfo(uint index, string p) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(p);
+    tradecontract.setParty(temp);
+  }
+
+  //returns the counter party address of the trade at given index
+  function setTradePartyAddressInfo(uint index, address pa) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setPartyAddress(pa);
+  }
+
+  //returns the contact of the trade at given index
+  function setTradeContactInfo(uint index, string c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(c);
+    tradecontract.setContact(temp);
+  }
+
+  //returns the pricing method of the trade at given index
+  function setTradePricingMethodInfo(uint index, string pm) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(pm);
+    tradecontract.setPricingMethod(temp);
+  }
+
+  //returns the trade index of the trade at given index
+  function setTradeIndexInfo(uint index, uint p, uint s) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setIndex(p,s);
+  }
+
+  //returns the trade index of the trade at given index
+  function setTradeIndexFactorInfo(uint index, uint p, uint s) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setIndexFactor(p,s);
+  }
+
+  //returns thefixed price of the trade at given index
+  function setTradeFixedPriceInfo(uint index, uint d, uint c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setFixedPrice(d,c);
+  }
+
+  //returns the point of the trade at given index
+  function setTradePointInfo(uint index, string p) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(p);
+    tradecontract.setPoint(temp);
+  }
+
+  //returns the volume of the trade at given index
+  function setTradeVolumeInfo(uint index, uint d, uint c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setVolume(d,c);
+  }
+
+  //returns the comments of the trade at given index
+  function setTradeComments(uint index, string c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(c);
+    tradecontract.setComments(temp);
+  }
+
+  //returns the volume of the trade at given index
+  function setTradeTotalVolumeInfo(uint index, uint d, uint c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setTotalVolume(d, c);
+  }
+
+  //returns month, day, and year (all uint) representing trade contract deal date
+  function setTradeDealDateInfo(uint index, uint m, uint d, uint y) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setDealDate(m, d, y);
+  }
+
+  //returns the total price of the trade at given index
+  function setTradeTotalPriceInfo(uint index, uint d, uint c) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setTotalPrice(d, c);
+  }
+  
+  //returns the trader of the trade at given index
+  function setTradeTrader(uint index, string t) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    bytes32 temp = stringToBytes32(t);
+    tradecontract.setTrader(temp);
+  }
+
+  //returns month, day, and year (all uint) representing trade contract entered on date **Note: could make this automatic**
+  function setTradeEnteredOnInfo(uint index, uint m, uint d, uint y) public {
+    address tradeAddress = tradeHistory[index]; 
+    AbstractTrade tradecontract = AbstractTrade(tradeAddress);
+
+    tradecontract.setEnteredOn(m, d, y);
   }
 }
 

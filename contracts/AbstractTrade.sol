@@ -160,119 +160,119 @@ contract AbstractTrade {
 ************************************************/
 
   function setFirm(bool f) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     firm = f;
   }
 
   function setStartDate(uint m, uint d, uint y) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     startDate.month = m;
     startDate.day = d;
     startDate.year = y;
   }
 
   function setEndDate(uint m, uint d, uint y) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     endDate.month = m;
     endDate.day = d;
     endDate.year = y;
   }
 
   function setPipe(bytes32 p) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     pipe = p;
   }
 
   function setCounterParty(bytes32 cp) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     counterParty = cp;
   }
 
   function setCounterPartyAddress(address cp) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     counterPartyAddress = cp;
   }
 
   function setParty(bytes32 p) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     party = p;
   }
 
   function setPartyAddress(address p) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     partyAddress = p;
   }
 
   function setContact(bytes32 c) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     contact = c;
   }
 
   function setPricingMethod(bytes32 pm) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     pricingMethod = pm;
   }
 
   function setIndex(uint p, uint s) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     index.prefix = p;
     index.suffix = s;
   }
 
   function setIndexFactor(uint p, uint s) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     indexFactor.prefix = p;
     indexFactor.suffix = s;
   }
 
   function setFixedPrice(uint d, uint c) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     fixedPrice.dollars = d;
     fixedPrice.cents = c;
   }
 
   function setPoint(bytes32 p) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     point = p;
   }
 
   function setVolume(uint p, uint s) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     volume.prefix = p;
     volume.suffix = s;
   }
 
   function setComments(bytes32 c) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     comments = c;
   }
 
   function setTotalVolume(uint p, uint s) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     totalVolume.prefix = p;
     totalVolume.suffix = s;
   }
 
   function setDealDate(uint m, uint d, uint y) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     dealDate.month = m;
     dealDate.day = d;
     dealDate.year = y;
   }
 
   function setTotalPrice(uint d, uint c) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     totalPrice.dollars = d;
     totalPrice.cents = c;
   }
 
   function setTrader(bytes32 t) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     trader = t;
   }
 
   function setEnteredOn(uint m, uint d, uint y) public {
-    require(msg.sender == partyAddress);
+    require(msg.sender == owner);
     enteredOn.month = m;
     enteredOn.day = d;
     enteredOn.year = y;
