@@ -147,99 +147,99 @@ contract AbstractTrade {
                  SET FUNCTIONS                   
 ************************************************/
 
-  function setFirm(bool f) private {
+  function setFirm(bool f) public {
     firm = f;
   }
 
-  function setStartDate(uint m, uint d, uint y) private {
+  function setStartDate(uint m, uint d, uint y) public {
     startDate.month = m;
     startDate.day = d;
     startDate.year = y;
   }
 
-  function setEndDate(uint m, uint d, uint y) private {
+  function setEndDate(uint m, uint d, uint y) public
     endDate.month = m;
     endDate.day = d;
     endDate.year = y;
   }
 
-  function setPipe(bytes32 p) private {
+  function setPipe(bytes32 p) public {
     pipe = p;
   }
 
-  function setCounterParty(bytes32 cp) private {
+  function setCounterParty(bytes32 cp) public {
     counterParty = cp;
   }
 
-  function setCounterPartyAddress(address cp) private {
+  function setCounterPartyAddress(address cp) public {
     counterPartyAddress = cp;
   }
 
-  function setParty(bytes32 p) private {
+  function setParty(bytes32 p) public {
     party = p;
   }
 
-  function setPartyAddress(address p) private {
+  function setPartyAddress(address p) public {
     partyAddress = p;
   }
 
-  function setContact(bytes32 c) private {
+  function setContact(bytes32 c) public {
     contact = c;
   }
 
-  function setPricingMethod(bytes32 pm) private {
+  function setPricingMethod(bytes32 pm) public {
     pricingMethod = pm;
   }
 
-  function setIndex(uint p, uint s) private {
+  function setIndex(uint p, uint s) public {
     index.prefix = p;
     index.suffix = s;
   }
 
-  function setIndexFactor(uint p, uint s) private {
+  function setIndexFactor(uint p, uint s) public {
     indexFactor.prefix = p;
     indexFactor.suffix = s;
   }
 
-  function setFixedPrice(uint d, uint c) private {
+  function setFixedPrice(uint d, uint c) public {
     fixedPrice.dollars = d;
     fixedPrice.cents = c;
   }
 
-  function setPoint(bytes32 p) private {
+  function setPoint(bytes32 p) public {
     point = p;
   }
 
-  function setVolume(uint p, uint s) private {
+  function setVolume(uint p, uint s) public {
     volume.prefix = p;
     volume.suffix = s;
   }
 
-  function setComments(bytes32 c) private {
+  function setComments(bytes32 c) public {
     comments = c;
   }
 
-  function setTotalVolume(uint p, uint s) private {
+  function setTotalVolume(uint p, uint s) public {
     totalVolume.prefix = p;
     totalVolume.suffix = s;
   }
 
-  function setDealDate(uint m, uint d, uint y) private {
+  function setDealDate(uint m, uint d, uint y) public {
     dealDate.month = m;
     dealDate.day = d;
     dealDate.year = y;
   }
 
-  function setTotalPrice(uint d, uint c) private {
+  function setTotalPrice(uint d, uint c) public {
     totalPrice.dollars = d;
     totalPrice.cents = c;
   }
 
-  function setTrader(bytes32 t) private {
+  function setTrader(bytes32 t) public {
     trader = t;
   }
 
-  function setEnteredOn(uint m, uint d, uint y) private {
+  function setEnteredOn(uint m, uint d, uint y) public {
     enteredOn.month = m;
     enteredOn.day = d;
     enteredOn.year = y;
