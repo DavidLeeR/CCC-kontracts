@@ -1,5 +1,7 @@
 pragma solidity ^0.4.4;
 
+//import "./CurrentC.sol";
+
 //abstract contract for use with purchase or sell trades (only difference is internalType value and acceptTrade function)
 contract AbstractTrade {
 
@@ -404,4 +406,6 @@ contract AbstractTrade {
 
   //function for the counter party to accept the trade, calls main contract to add trade address to array
   function acceptTrade() payable;
+
+  function declineTrade();
 }

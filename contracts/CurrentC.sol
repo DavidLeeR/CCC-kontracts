@@ -103,6 +103,25 @@ contract CurrentC {
     //the TradeContract must be the one calling this function
     acceptedTradeHistory[acceptedHistoryTracker] = msg.sender;
     acceptedHistoryTracker++;
+
+    //sends event to owner that trade contract at address "msg.sender" has been accepted
+    tradeAccepted(owner, msg.sender);
+  }
+
+  function declineTradeMain() {
+    uint i = 0;
+    uint tradeCheck = 0;
+    //see if trade address is in trade history address array
+    for (i; i < historyTracker;i++) {
+      if (msg.sender == tradeHistory[i]) {
+        tradeCheck = 1;
+      }
+    }
+
+    //require the trade address to be in the array of stored trade addresses
+    require(tradeCheck == 1);
+
+    tradeDeclined(owner, msg.sender);
   }
 
   //returns address of owner of main CCC contract
@@ -807,6 +826,12 @@ contract CurrentC {
 
     tradecontract.setEnteredOn(m, d, y);
   }
+
+/*---------------------------------------------------------------------
+                       Events
+-----------------------------------------------------------------------*/
+  event tradeAccepted(address indexed partyAdd, address indexed tradeAdd);
+  event tradeDeclined(address indexed partyAdd, address indexed tradeAdd);
 }
 
 /*---------------------------------------------------------------------
@@ -831,6 +856,18 @@ contract PurchaseTradeContract is AbstractTrade {
     //makes contract read only, sending all funds it contains to the counterparty 
     selfdestruct(counterPartyAddress);
   }
+
+  function declineTrade() {
+    require(msg.sender == counterPartyAddress);
+
+    address mainInterfaceAddress = owner; 
+    CurrentC currentc = CurrentC(mainInterfaceAddress);
+
+    currentc.declineTradeMain();
+
+    //makes contract read only, sending all funds it contains to the party
+    selfdestruct(partyAddress);
+  }
 }
 
 /*---------------------------------------------------------------------
@@ -853,6 +890,18 @@ contract SellTradeContract is AbstractTrade {
     currentc.acceptTradeMain();
 
     //makes contract read only, sending all funds it contains to the party 
+    selfdestruct(partyAddress);
+  }
+
+  function declineTrade() {
+    require(msg.sender == counterPartyAddress);
+
+    address mainInterfaceAddress = owner; 
+    CurrentC currentc = CurrentC(mainInterfaceAddress);
+
+    currentc.declineTradeMain();
+
+    //makes contract read only, sending all funds it contains to the party
     selfdestruct(partyAddress);
   }
 }
